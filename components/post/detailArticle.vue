@@ -10,8 +10,8 @@
       <!-- 标题 -->
       <h1> {{ data.title }} </h1>
       <div class="detail-data">
-        <span>攻略：2019-05-22 10:57</span>
-        <span>阅读：13745</span>
+        <span>攻略：{{ publishTime }}</span>
+        <span>阅读：{{data.watch}} </span>
       </div>
       <!-- 内容 -->
       <div class="detail-content" v-html="data.content"></div>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   props: {
     data: {
@@ -27,8 +28,22 @@ export default {
       default: {}
     }
   },
+  data () {
+      return {
+          publicTime: ''
+      }
+  },
   mounted() {
     console.log(this.data);
+    // 引入moment插件
+    var moment = require('moment');
+
+  },
+  computed: {
+      publishTime() {
+          // 格式化时间
+          return moment(new Date(this.data.created_at)).format('YYYY-MM-DD HH:mm')
+      }
   }
 };
 </script>
