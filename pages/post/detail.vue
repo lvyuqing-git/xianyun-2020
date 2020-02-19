@@ -1,9 +1,23 @@
 <template>
-  <div class="post-detail">攻略详情</div>
+  <div class="post-detail container">
+    <el-row>
+      <!-- 文章详情 -->
+      <el-col :span="17">
+        <DetailArticle :data="detailData" />
+      </el-col>
+      <el-col :span="7">右边 其他攻略</el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
+import DetailArticle from "@/components/post/detailArticle";
 export default {
+  data() {
+    return {
+      detailData: {}
+    };
+  },
   methods: {
     // 获取攻略详情
     getDetail() {
@@ -13,26 +27,32 @@ export default {
         // console.log(id);
         // 请求文章详情
         this.$axios({
-            url: '/posts',
-            params: {
-                id
-            }
-        }).then(( {data: {data}} ) => {
-            console.log(data)
-            if(data.length) {
-              
-            }
-        })
-
+          url: "/posts",
+          params: {
+            id
+          }
+        }).then(({ data: { data } }) => {
+          console.log(data);
+          if (data.length) {
+            this.detailData = data[0];
+          }
+        });
       }
     }
   },
   mounted() {
     // 获取攻略
     this.getDetail();
+  },
+  components: {
+    DetailArticle
   }
 };
 </script>
 
 <style lang="less" scoped>
+.container {
+  margin: 15px auto;
+  width: 1000px;
+}
 </style>
