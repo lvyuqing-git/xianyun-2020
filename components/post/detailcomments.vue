@@ -45,6 +45,20 @@
         </el-col>
       </el-row>
     </div>
+    <!-- 评论数据显示区 -->
+    <div class="coments-list">
+      <!-- 评论内容 -->
+      <!-- 分页组件 -->
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[2, 4, 6, 8]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
@@ -58,10 +72,14 @@ export default {
   },
   data() {
     return {
+      commentsData: [], // 评论数据数组
       textarea: "", //评论内容输入
       dialogImageUrl: "",
       dialogVisible: false,
-      picList: [] // 照片列表
+      picList: [], // 照片列表
+      currentPage: 1, //当前页码默认值
+      total: 100, //总页数
+      pageSize: 2 //
     };
   },
   methods: {
@@ -141,14 +159,53 @@ export default {
         }
       }).then(res => {
         console.log(res);
-        if(res.message = "提交成功") {
-            this.$message.success('评论提交成功！')
+        if ((res.message = "提交成功")) {
+          this.$message.success("评论提交成功！");
         }
         // 其他处理，下边评论数据的再次获取？
       });
+    },
+    // 分页-每页显示条数改变
+    handleSizeChange(val) {
+      //   console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+      // 重新获取评论数据
+      this.getCommentData();
+    },
+    // 分页-当前页码改变
+    handleCurrentChange(val) {
+      //   console.log(`当前页: ${val}`);
+      this.currentPage = val;
+      // 重新获取评论数据
+      this.getCommentData();
+    },
+    // 获取评论数据
+    getCommentData() {
+      let id = this.$route.query.id;
+      let _limit = Number(this.pageSize);
+      let _start = (Number(this.currentPage) - 1) * _limit;
+      //   发起请求 文章评论数据
+      this.$axios({
+        url: "/posts/comments",
+        params: {
+          post: id,
+          _start,
+          _limit
+        }
+      }).then(({ data: { data, total } }) => {
+        // data 评论列表数组
+        // total所有评论总条数
+        if (data) {
+          this.total = total;
+          this.commentsData = data;
+        }
+      });
     }
   },
-  mounted() {}
+  mounted() {
+    // 获取评论数据
+    this.getCommentData();
+  }
 };
 </script>
 
@@ -190,6 +247,10 @@ export default {
     /deep/.el-upload--picture-card {
       line-height: 100px;
     }
+  }
+  .coments-list {
+    margin-top: 20px;
+    text-align: center;
   }
 }
 </style>
