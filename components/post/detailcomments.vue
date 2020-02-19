@@ -41,7 +41,7 @@
           </el-dialog>
         </el-col>
         <el-col :span="2">
-            <el-button type="primary" size="mini">提交</el-button>
+          <el-button type="primary" size="mini" @click="submitComment">提交</el-button>
         </el-col>
       </el-row>
     </div>
@@ -60,16 +60,88 @@ export default {
     return {
       textarea: "", //评论内容输入
       dialogImageUrl: "",
-      dialogVisible: false
+      dialogVisible: false,
+      picList: [] // 照片列表
     };
   },
   methods: {
+    // 删除图片触发
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      //   console.log(file, fileList);
+      //  保存照片列表
+      this.picList = fileList;
     },
+    // 照片墙显示
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
+    },
+    // 照片上传成功
+    handlerPictureList(response, file, fileList) {
+      // console.log(response)
+      // console.log(file)
+      // console.log(fileList)
+      //  保存照片列表
+      this.picList = fileList;
+    },
+    // 点击提交按钮触发
+    submitComment() {
+      let content = this.textarea;
+      let picsOrg = this.picList;
+      let post = this.$route.query.id;
+      let token = this.$store.state.user.userInfo.token;
+      if (!content) {
+        this.$message.error("评论的内容不能为空");
+        return;
+      }
+      //   判断是否登录
+      if (!token) {
+        // 提示
+        this.$message.error("你还没有登录！");
+        // 跳转登录页 携带攻略页的url
+        this.$router.push({
+          path: "/user/login",
+          query: {
+            returnUrl: `/post/detail?id=${post}`
+          }
+        });
+      }
+
+      let pics = [];
+      // 图片列表长度不为零，
+      // 处理图片的数据
+      if (picsOrg.length) {
+        picsOrg.forEach(({ status, uid, response: [arr] }) => {
+          // arr 为数组response的第0项
+          // console.log(arr)
+          arr.status = status;
+          arr.uid = uid;
+          pics.push(arr);
+        });
+      }
+      // 发起 提交评论请求
+      this.putComment(
+        {
+          content,
+          pics,
+          post
+        },
+        token
+      );
+    },
+    // 提交评论 请求
+    putComment(data, token) {
+      console.log(data, token);
+        // this.$axios({
+        //     method: 'POST',
+        //     url: '/comments',
+        //     data,
+        //     headers: {
+        //         Authorization: 'Bearer ' + token
+        //     }
+        // }).then(res => {
+        //     console.log(res)
+        // })
     }
   },
   mounted() {}
