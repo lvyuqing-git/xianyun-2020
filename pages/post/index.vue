@@ -27,7 +27,7 @@ export default {
   height: 800px;
   display: flex;
   .left {
-    width: 240px;
+    width: 260px;
     float: left;
   }
   .right {
