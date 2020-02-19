@@ -50,6 +50,12 @@ export default {
   components: {
     DetailArticle,
     DetailRecommand
+  },
+  //   组件内的守卫
+  beforeRouteUpdate(to, from, next) {
+    next();
+    // 重新渲染页面数据
+    this.getDetail()
   }
 };
 </script>
