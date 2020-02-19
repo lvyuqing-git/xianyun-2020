@@ -132,16 +132,20 @@ export default {
     // 提交评论 请求
     putComment(data, token) {
       console.log(data, token);
-        // this.$axios({
-        //     method: 'POST',
-        //     url: '/comments',
-        //     data,
-        //     headers: {
-        //         Authorization: 'Bearer ' + token
-        //     }
-        // }).then(res => {
-        //     console.log(res)
-        // })
+      this.$axios({
+        method: "POST",
+        url: "/comments",
+        data,
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      }).then(res => {
+        console.log(res);
+        if(res.message = "提交成功") {
+            this.$message.success('评论提交成功！')
+        }
+        // 其他处理，下边评论数据的再次获取？
+      });
     }
   },
   mounted() {}
