@@ -172,16 +172,20 @@ export default {
     font-size: 20px;
   }
   .comments-input {
-      /deep/textarea {
-          margin-bottom: 10px;
-      }
+    /deep/textarea {
+      margin-bottom: 10px;
+    }
   }
   .comments-upload {
-      /deep/.el-upload, /deep/.el-upload-list__item {
-          width: 100px;
-          height: 100px;
-          line-height: 100px;
-      }
+    /deep/.el-upload,
+    /deep/.el-upload-list__item {
+      width: 100px;
+      height: 100px;
+      //   line-height: 100px;
+    }
+    /deep/.el-upload--picture-card {
+      line-height: 100px;
+    }
   }
 }
 </style>
