@@ -26,10 +26,13 @@
       <el-row type="flex" justify="space-between">
         <el-col class="comments-upload">
           <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
+            :action="$axios.defaults.baseURL+'/upload'"
+            name="files"
             list-type="picture-card"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
+            :on-success="handlerPictureList"
+            :file-list="picList"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
