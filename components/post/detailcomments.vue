@@ -48,7 +48,7 @@
     <!-- 评论数据显示区 -->
     <div class="coments-list">
       <!-- 评论内容 -->
-      <div class="comment-inner">
+      <div class="comment-inner" v-if="total">
           <CommentItem :data="commentsData" />
       </div>
       <!-- 分页组件 -->
@@ -60,7 +60,12 @@
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
+        v-if="total"
       ></el-pagination>
+      <!-- 没有评论时提示 -->
+      <div class="no-comment" v-if="!total">
+          暂无评论,赶快抢占沙发!
+      </div>
     </div>
   </div>
 </template>
@@ -262,6 +267,13 @@ export default {
         margin-bottom: 20px;
         border: 1px solid #eee;
     }
+  }
+  .no-comment {
+      margin-bottom: 30px;
+      border: 1px dashed #ccc;
+      padding: 30px 0;
+      text-align: center;
+      color: #999;
   }
 }
 </style>
