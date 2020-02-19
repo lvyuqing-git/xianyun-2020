@@ -48,6 +48,9 @@
     <!-- 评论数据显示区 -->
     <div class="coments-list">
       <!-- 评论内容 -->
+      <div class="comment-inner">
+          <CommentItem :data="commentsData" />
+      </div>
       <!-- 分页组件 -->
       <el-pagination
         @size-change="handleSizeChange"
@@ -63,6 +66,7 @@
 </template>
 
 <script>
+import CommentItem from '@/components/post/detailCommentItem'
 export default {
   props: {
     data: {
@@ -205,6 +209,9 @@ export default {
   mounted() {
     // 获取评论数据
     this.getCommentData();
+  },
+  components: {
+    CommentItem
   }
 };
 </script>
@@ -251,6 +258,10 @@ export default {
   .coments-list {
     margin-top: 20px;
     text-align: center;
+    .comment-inner {
+        margin-bottom: 20px;
+        border: 1px solid #eee;
+    }
   }
 }
 </style>
