@@ -15,7 +15,7 @@ import IndexSearch from '@/components/post/indexSearch'
 export default {
   components: {
     IndexAside,
-    IndexSearch
+    IndexSearch,
   }
 }
 </script>
@@ -35,6 +35,7 @@ export default {
     flex: 1;
     margin-left: 40px;
     box-sizing: border-box;
+    
   }
 }
 </style>
