@@ -4,11 +4,11 @@
     <h3>相关攻略</h3>
     <!-- 攻略简要信息 -->
     <nuxt-link class="detail-brief" to="#" v-for="(item, index) in recommandList" :key="index">
-      <el-row type="flex" >
+      <el-row type="flex">
         <el-col :span="16">
           <div class="title">{{item.title}}</div>
           <div class="info">
-            <span>2020-02-19 10:49</span>
+            <span> {{publishTime(item.created_at)}} </span>
             <span>阅读 {{ item.watch || 0 }}</span>
           </div>
         </el-col>
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+// 引入moment插件
+import moment from 'moment'
 export default {
   data() {
     return {
@@ -31,6 +33,7 @@ export default {
   mounted() {
     // 获取攻略推荐
     this.getRecommand();
+    
   },
   methods: {
     // 获取攻略推荐
@@ -52,6 +55,10 @@ export default {
           }
         });
       }
+    },
+    // 格式化时间
+    publishTime(time) {
+      return moment(new Date(time)).format("YYYY-MM-DD HH:mm");
     }
   }
 };

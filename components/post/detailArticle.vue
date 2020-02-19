@@ -20,6 +20,7 @@
 </template>
 
 <script>
+ // 引入moment插件
 import moment from 'moment'
 export default {
   props: {
@@ -36,7 +37,7 @@ export default {
   mounted() {
     console.log(this.data);
     // 引入moment插件
-    var moment = require('moment');
+    // var moment = require('moment');
 
   },
   computed: {
