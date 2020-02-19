@@ -1,13 +1,16 @@
 <template>
   <div class="aside">
     <div class="aside-container">
+      <!-- 侧边栏顶部 -->
       <div class="asidetop">
+        <!-- 侧边栏列表部分 -->
         <ul>
           <li v-for="(item,index) in cityList"
               :key="index"
               @mouseover="alternumber(index)"
               class="fatherli">
             <span>{{item.type}}</span><i class="el-icon-arrow-right icon"></i>
+            <!-- 侧边栏隐藏部分 -->
             <div class="asideconseal"
                  v-show="index == number">
               <ul>
@@ -23,6 +26,8 @@
         </ul>
 
       </div>
+      <!-- 侧边栏底部 -->
+
       <div class="asidebottom">
         <p>推荐城市</p>
         <!-- <img src="pic_sea.jpeg"
@@ -56,6 +61,7 @@ export default {
 </script>
 
 <style lang='less' scoped>
+//  侧边栏顶部
 .aside-container {
   .asidetop {
     position: relative;
@@ -64,6 +70,7 @@ export default {
         display: block;
       }
     }
+    // 侧边栏列表部分
 
     .fatherli {
       height: 40px;
@@ -84,18 +91,20 @@ export default {
         i {
           color: #ffc14f;
         }
-        .conten{
-            color: #9a9a9a;
+        .conten {
+          color: #9a9a9a;
         }
       }
     }
+    // 侧边栏隐藏部分
     .asideconseal {
       position: absolute;
       top: 0px;
-      left: 239px;
+      left: 260px;
       display: none;
       border: 1px solid #dddddd;
       border-left: none;
+      background-color: #fff;
       .sonli {
         height: 40px;
         line-height: 40px;
@@ -103,18 +112,18 @@ export default {
         width: 400px;
         .index {
           font-size: 20px;
-          vertical-align:middle;
+          vertical-align: middle;
           font-style: italic;
         }
-        .area{
-            margin: 0 15px 0
+        .area {
+          margin: 0 15px 0;
         }
       }
-      .line{
-          position: absolute;
-          top: 164px;
-          border-left: 1px solid #dddddd;
-          height: 37px;
+      .line {
+        position: absolute;
+        top: 164px;
+        border-left: 1px solid #dddddd;
+        height: 37px;
       }
     }
   }

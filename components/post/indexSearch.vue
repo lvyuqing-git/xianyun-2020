@@ -2,22 +2,43 @@
   <div class="searchbox">
     <div class="searchbox-top">
       <input type="text"
-             placeholder="请输入想去的地方，比如：'广州'">
+             placeholder="请输入想去的地方，比如：'广州'"
+             @keyup.enter="search"
+             v-model="searchValue">
       <i class="el-icon-search"></i>
     </div>
     <div class="searchbox-bottom">
-      <ul>
-        <li>推荐：</li>
-        <li>广州</li>
-        <li>上海</li>
-        <li>北京</li>
+      <ul class="citylist">
+        <li class="first-cild">推荐：</li>
+        <li v-for="(item,index) in citylist" :key="index" @click="search(item)">{{item}}</li>
+       
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      // 搜索值
+      searchValue: '',
+      citylist : ['广州','上海','北京']
+    }
+  },
+  //回车搜索
+  methods: {
+    search(value) {
+      this.$store.dispatch('post/citySearch', {
+        _start: 0,
+        _limit: 3,
+        city: value || this.searchValue
+      }).then((res)=>{
+          console.log(res);
+      })
+    }
+  }
+}
 </script>
 
 <style lang='less' scoped>
@@ -41,12 +62,20 @@ export default {}
   }
 }
 .searchbox-bottom {
-    margin-top: 10px;
-    li{
-        float: left;
-        margin-right: 10px;
-        font-size: 12px;
-        color: #666;
+  margin-top: 10px;
+  .citylist {
+    li {
+      float: left;
+      margin-right: 10px;
+      font-size: 12px;
+      color: #666;
+      &:hover {
+        color: #ffa500;
+      }
     }
+    .first-cild:hover {
+      color: #666;
+    }
+  }
 }
 </style>

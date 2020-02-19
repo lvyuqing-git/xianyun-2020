@@ -4,18 +4,18 @@
       <IndexAside></IndexAside>
     </div>
     <div class="right">
-      <!-- <IndexSearch></IndexSearch> -->
+      <IndexSearch></IndexSearch>
     </div>
   </div>
 </template>
 
 <script>
 import IndexAside from '@/components/post/indexAside'
-// import IndexSearch from '@/components/post/indexSearch'
+import IndexSearch from '@/components/post/indexSearch'
 export default {
   components: {
     IndexAside,
-    // IndexSearch
+    IndexSearch
   }
 }
 </script>
@@ -27,7 +27,7 @@ export default {
   height: 800px;
   display: flex;
   .left {
-    width: 240px;
+    width: 260px;
     float: left;
   }
   .right {
