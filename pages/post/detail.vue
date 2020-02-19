@@ -1,17 +1,20 @@
 <template>
   <div class="post-detail container">
-    <el-row>
+    <el-row :gutter="30">
       <!-- 文章详情 -->
       <el-col :span="17">
         <DetailArticle :data="detailData" />
       </el-col>
-      <el-col :span="7">右边 其他攻略</el-col>
+      <el-col :span="7">
+        <DetailRecommand />
+      </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
 import DetailArticle from "@/components/post/detailArticle";
+import DetailRecommand from "@/components/post/detailRecommand";
 export default {
   data() {
     return {
@@ -45,7 +48,8 @@ export default {
     this.getDetail();
   },
   components: {
-    DetailArticle
+    DetailArticle,
+    DetailRecommand
   }
 };
 </script>
