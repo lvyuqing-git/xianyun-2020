@@ -3,7 +3,7 @@
     <!-- 攻略推荐 -->
     <h3>相关攻略</h3>
     <!-- 攻略简要信息 -->
-    <nuxt-link class="detail-brief" to="#" v-for="(item, index) in recommandList" :key="index">
+    <nuxt-link class="detail-brief" :to="'/post/detail?id='+ item.id" v-for="(item, index) in recommandList" :key="index">
       <el-row type="flex">
         <el-col :span="16">
           <div class="title">{{item.title}}</div>

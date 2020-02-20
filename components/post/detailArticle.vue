@@ -64,7 +64,10 @@ export default {
         margin-left: 20px;
       }
     }
-    .detail-content {
+    /deep/.detail-content {
+      & * {
+        max-width: 700px!important;
+      }
       /deep/p {
         margin: 15px auto 10px;
         span {

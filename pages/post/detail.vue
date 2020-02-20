@@ -3,8 +3,12 @@
     <el-row :gutter="30">
       <!-- 文章详情 -->
       <el-col :span="17">
+        <!-- 文章内容 -->
         <DetailArticle :data="detailData" />
+        <!-- 文章评论 -->
+        <DetailComments :data="detailData" />
       </el-col>
+      <!-- 文章推荐 -->
       <el-col :span="7">
         <DetailRecommand />
       </el-col>
@@ -15,6 +19,7 @@
 <script>
 import DetailArticle from "@/components/post/detailArticle";
 import DetailRecommand from "@/components/post/detailRecommand";
+import DetailComments from "@/components/post/detailcomments";
 export default {
   data() {
     return {
@@ -49,7 +54,14 @@ export default {
   },
   components: {
     DetailArticle,
-    DetailRecommand
+    DetailRecommand,
+    DetailComments
+  },
+  //   组件内的守卫
+  beforeRouteUpdate(to, from, next) {
+    next();
+    // 重新渲染页面数据
+    this.getDetail();
   }
 };
 </script>
