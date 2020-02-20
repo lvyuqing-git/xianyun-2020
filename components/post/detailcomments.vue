@@ -18,6 +18,13 @@
       </el-row>
     </div>
     <p class="comments-title">评论</p>
+    <!-- 回复谁(哪个用户)的提示  过渡效果: 缩放-->
+    <transition name="el-zoom-in-center">
+      <div v-show="showWho" class="transition-box reply-who">
+        回复 @ {{ whoName }}
+        <span class="replay-no" @click="showWho = false">×</span>
+      </div>
+    </transition>
     <!-- 评论输入区  -->
     <div class="comments-input">
       <!-- 输入框-文本域 -->
@@ -256,6 +263,33 @@ export default {
   .comments-input {
     /deep/textarea {
       margin-bottom: 10px;
+    }
+  }
+  .reply-who.transition-box {
+    display: inline-block;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: #999;
+    background-color: #eee;
+    .replay-no {
+      box-sizing: border-box;
+      display: inline-block;
+      margin-left: 10px;
+      border: 1px solid transparent;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+      line-height: 14px;
+      text-align: center;
+      &:hover {
+        border: 1px solid #ddd;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
     }
   }
   .comments-upload {
