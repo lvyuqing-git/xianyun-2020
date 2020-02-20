@@ -14,7 +14,7 @@
     <div class="paging">
       <el-pagination @size-change="handleSizeChange"
                      @current-change="handleCurrentChange"
-                     :current-page="currentPage"
+                     :current-page="currentChange"
                      :page-sizes="[3, 5, 10, 15]"
                      :page-size="100"
                      layout="total, sizes, prev, pager, next, jumper"
@@ -33,8 +33,6 @@ export default {
     return {
       //接受搜索框的数据
       StrategyData: {},
-      // 分页框当前页数
-      currentPage: 0,
       //分页选择条数
       sizeChange: 3,
       //分页框选择页数
@@ -55,7 +53,7 @@ export default {
       },
     //重置页码
     resetCurrentChange() {
-      this.currentPage = 1
+    //   this.currentPage = 1
       this.currentChange = 1
       console.log(this.currentChange)
     },
