@@ -77,18 +77,25 @@
 
 <script>
 export default {
-  props: ['searchValue'],
+  props: ['searchValue', 'pagingObj'],
   watch: {
     searchValue() {
       this.init()
+    },
+     pagingObj: {
+      deep: true,
+      handler: function(val, oldVal) {
+        console.log(this.pagingObj)
+        this.init()
+      }
     }
   },
   methods: {
     init() {
       this.$store
         .dispatch('post/citySearch', {
-          _start: 0,
-          _limit: 3,
+          _start: (this.pagingObj.currentChange - 1) * this.pagingObj.sizeChange || 0,
+          _limit: this.pagingObj.sizeChange || 3,
           city: this.searchValue || ''
         })
         .then(res => {

@@ -6,16 +6,16 @@
           <IndexAside></IndexAside>
         </div>
         <div class="right">
-          <IndexSearch @search='setSearchValue'
-                       :sizeChange='sizeChange'></IndexSearch>
-          <IndexStrategy :searchValue='searchValue'></IndexStrategy>
+          <IndexSearch @search='setSearchValue'></IndexSearch>
+          <IndexStrategy :searchValue='searchValue'
+                         :pagingObj='paging'></IndexStrategy>
         </div>
       </div>
     </div>
     <div class="paging">
       <el-pagination @size-change="handleSizeChange"
                      @current-change="handleCurrentChange"
-                     :current-page="currentChange"
+                     :current-page="paging.currentChange"
                      :page-sizes="[3, 5, 10, 15]"
                      :page-size="1"
                      layout="total, sizes, prev, pager, next, jumper"
@@ -34,14 +34,18 @@ export default {
     return {
       //接受搜索框的数据
       StrategyData: {},
-      //页码默认值
-      currentPage: 1,
-      //分页选择条数
-      sizeChange: 3,
-      //分页框选择页数
-      currentChange: 1,
+
       //搜索框的值
-      searchValue: ''
+      searchValue: '',
+      //分页对象
+      paging: {
+        //页码默认值
+        currentPage: 1,
+        //分页选择条数
+        sizeChange: 3,
+        //分页框选择页数
+        currentChange: 1
+      }
     }
   },
   components: {
@@ -56,29 +60,27 @@ export default {
     },
     //重置页码
     resetCurrentChange() {
-      this.currentChange = 1
+      this.paging.currentChange = 1
     },
     //分页框选择条数时触发
     handleSizeChange(val) {
-      this.sizeChange = val
-      this.search()
+      this.paging.sizeChange = val
     },
     //分页框选择页数时触发
     handleCurrentChange(val) {
-      this.currentChange = val
-      this.search()
-    },
-    search() {
-      this.$store
-        .dispatch('post/citySearch', {
-          _start: (this.currentChange - 1) * this.sizeChange,
-          _limit: this.sizeChange,
-          city: this.searchValue
-        })
-        .then(res => {
-          //   this.$store.commit('post/setStrategy', res.data)
-        })
+      this.paging.currentChange = val
     }
+    // search() {
+    //   this.$store
+    //     .dispatch('post/citySearch', {
+    //       _start: (this.currentChange - 1) * this.sizeChange,
+    //       _limit: this.sizeChange,
+    //       city: this.searchValue
+    //     })
+    //     .then(res => {
+    //       //   this.$store.commit('post/setStrategy', res.data)
+    //     })
+    // }
   }
 }
 </script>

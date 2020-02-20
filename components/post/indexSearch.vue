@@ -27,7 +27,6 @@
 
 <script>
 export default {
-   
   data() {
     return {
       // 搜索值
