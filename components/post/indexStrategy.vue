@@ -4,52 +4,23 @@
          v-for="(item,index) in $store.state.post.strategyList.data"
          :key="index">
       <!-- 上下结构类型 -->
-      <div class="up-down"
-           v-if="item.images.length > 2">
-        <div class="title">
-          {{item.title}}
-        </div>
-        <div class="content">
-          <div v-html="item.content">
-          </div>
-        </div>
-        <!-- //图片 -->
-        <div class="pictures">
-          <img :src="item"
-               alt=""
-               v-for="(item,index) in item.images"
-               :key="index">
-
-        </div>
-        <!-- 底部信息栏 -->
-        <div class="postinfo">
-          <ul>
-            <li><i class="el-icon-location-outline"></i>{{item.cityName}}</li>
-            <li>by</li>
-            <li class="cityname"><img :src="`${$axios.defaults.baseURL + item.account.defaultAvatar}`"
-                   alt=""
-                   class="defaultAvatar">{{item.account.nickname}}</li>
-            <li><i class="el-icon-view"></i> {{item.watch}}</li>
-            <li class="star">{{item.like}}赞</li>
-          </ul>
-        </div>
-      </div>
-      <!-- 左右结构 -->
-      <div class="zouyou clearfix"
-           v-else>
-        <div class="left">
-          <div class="pictures">
-            <img :src="item.images[0]">
-
-          </div>
-        </div>
-        <div class="right">
+      <nuxt-link :to="`/post/detail/?id=${item.id}`"
+                 v-if="item.images.length > 2">
+        <div class="up-down">
           <div class="title">
             {{item.title}}
           </div>
           <div class="content">
             <div v-html="item.content">
             </div>
+          </div>
+          <!-- //图片 -->
+          <div class="pictures">
+            <img :src="item"
+                 alt=""
+                 v-for="(item,index) in item.images"
+                 :key="index">
+
           </div>
           <!-- 底部信息栏 -->
           <div class="postinfo">
@@ -64,7 +35,42 @@
             </ul>
           </div>
         </div>
-      </div>
+      </nuxt-link>
+
+      <!-- 左右结构 -->
+      <nuxt-link :to="`/post/detail/?id=${item.id}`"
+                 v-else>
+        <div class="zouyou clearfix">
+          <div class="left">
+            <div class="pictures">
+              <img :src="item.images[0]">
+
+            </div>
+          </div>
+          <div class="right">
+            <div class="title">
+              {{item.title}}
+            </div>
+            <div class="content">
+              <div v-html="item.content">
+              </div>
+            </div>
+            <!-- 底部信息栏 -->
+            <div class="postinfo">
+              <ul>
+                <li><i class="el-icon-location-outline"></i>{{item.cityName}}</li>
+                <li>by</li>
+                <li class="cityname"><img :src="`${$axios.defaults.baseURL + item.account.defaultAvatar}`"
+                       alt=""
+                       class="defaultAvatar">{{item.account.nickname}}</li>
+                <li><i class="el-icon-view"></i> {{item.watch}}</li>
+                <li class="star">{{item.like}}赞</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nuxt-link>
+
     </div>
   </div>
 </template>
@@ -109,9 +115,9 @@ export default {}
       font-size: 18px;
       color: #000;
       margin-bottom: 15px;
-      &:hover{
-          color: #ffa500;
-          cursor: pointer;
+      &:hover {
+        color: #ffa500;
+        cursor: pointer;
       }
     }
     .content {
@@ -155,10 +161,10 @@ export default {}
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-         &:hover{
+        &:hover {
           color: #ffa500;
           cursor: pointer;
-      }
+        }
       }
 
       .content {

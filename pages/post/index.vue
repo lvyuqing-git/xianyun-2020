@@ -55,6 +55,7 @@ export default {
       },
     //重置页码
     resetCurrentChange() {
+      this.currentPage = 1
       this.currentChange = 1
       console.log(this.currentChange)
     },

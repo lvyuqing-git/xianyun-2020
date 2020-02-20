@@ -45,7 +45,6 @@ export default {
       if (value) {
         this.searchValue = value
       }
-      this.$emit('resetCurrentChange')
       this.$store
         .dispatch('post/citySearch', {
           _start: 0,
@@ -55,6 +54,8 @@ export default {
         .then(res => {
           this.$store.commit('post/setStrategy', res.data)
         })
+      //页码重置
+      this.$emit('resetCurrentChange')
     }
   }
 }
@@ -94,7 +95,6 @@ export default {
           color: #ffa500;
           cursor: pointer;
         }
-     
       }
       .first-cild:hover {
         color: #666;
