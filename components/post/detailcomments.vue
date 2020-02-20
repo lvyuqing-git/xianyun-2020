@@ -156,7 +156,7 @@ export default {
     },
     // 提交评论 请求
     putComment(data, token) {
-      console.log(data, token);
+      //   console.log(data, token);
       this.$axios({
         method: "POST",
         url: "/comments",
@@ -165,9 +165,13 @@ export default {
           Authorization: "Bearer " + token
         }
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         if ((res.message = "提交成功")) {
           this.$message.success("评论提交成功！");
+          // 获取评论数据
+          this.getCommentData();
+          //   清空输入框内容
+          this.textarea = ""
         }
         // 其他处理，下边评论数据的再次获取？
       });
