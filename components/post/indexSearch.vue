@@ -45,17 +45,9 @@ export default {
       if (value) {
         this.searchValue = value
       }
-      this.$store
-        .dispatch('post/citySearch', {
-          _start: 0,
-          _limit: 3,
-          city: this.searchValue
-        })
-        .then(res => {
-          this.$store.commit('post/setStrategy', res.data)
-        })
+       this.$emit('search',this.searchValue)
       //页码重置
-      this.$emit('resetCurrentChange')
+    //   this.$emit('resetCurrentChange')
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="strategyList">
     <div class="strategy"
-         v-for="(item,index) in $store.state.post.strategyList.data"
+         v-for="(item,index) in strategyList.data"
          :key="index">
       <!-- 上下结构类型 -->
       <nuxt-link :to="`/post/detail/?id=${item.id}`"
@@ -76,7 +76,34 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: ['searchValue'],
+  data() {
+    return {
+      strategyList: {}
+    }
+  },
+  mounted() {
+    this.$store
+      .dispatch('post/citySearch', {
+        _start: 0,
+        _limit: 3,
+        city: this.searchValue || ''
+      })
+      .then(res => {
+        this.strategyList = res.data
+        console.log(this.strategyList)
+        this.strategyList.data.forEach(item => {
+          if (item.images.length >= 3) {
+            item.images.length = 3
+          }
+        })
+        this.$store.commit('post/setTotal', this.strategyList.total)
+      })
+    //页码重置
+    this.$emit('resetCurrentChange')
+  }
+}
 </script>
 
 <style lang='less' scoped>

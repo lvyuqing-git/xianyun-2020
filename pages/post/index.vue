@@ -6,8 +6,8 @@
           <IndexAside></IndexAside>
         </div>
         <div class="right">
-          <IndexSearch @resetCurrentChange='resetCurrentChange' @inputValue='inputValue'></IndexSearch>
-          <IndexStrategy></IndexStrategy>
+          <IndexSearch @search='search' :sizeChange='sizeChange'></IndexSearch>
+          <IndexStrategy :searchValue='searchValue'></IndexStrategy>
         </div>
       </div>
     </div>
@@ -16,9 +16,9 @@
                      @current-change="handleCurrentChange"
                      :current-page="currentChange"
                      :page-sizes="[3, 5, 10, 15]"
-                     :page-size="100"
+                     :page-size="1"
                      layout="total, sizes, prev, pager, next, jumper"
-                     :total="$store.state.post.strategyList.total">
+                     :total="$store.state.post.total">
       </el-pagination>
     </div>
   </div>
@@ -31,13 +31,16 @@ import IndexStrategy from '@/components/post/indexStrategy'
 export default {
   data() {
     return {
+
       //接受搜索框的数据
       StrategyData: {},
+      //页码默认值
+      currentPage: 1,
       //分页选择条数
       sizeChange: 3,
       //分页框选择页数
       currentChange: 1,
-      //搜索输入框的值
+      //搜索框的值
       searchValue : ''
     }
   },
@@ -48,14 +51,12 @@ export default {
   },
   methods: {
       //接受搜索输入框的值
-      inputValue(value){
+      search(value){
           this.searchValue = value
       },
     //重置页码
     resetCurrentChange() {
-    //   this.currentPage = 1
       this.currentChange = 1
-      console.log(this.currentChange)
     },
     //分页框选择条数时触发
     handleSizeChange(val) {

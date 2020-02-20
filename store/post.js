@@ -1,18 +1,14 @@
 export const state = () => {
   return {
-    //搜索数据
-    strategyList: {}
+    //总条数
+    total: 0
   };
 };
 
 export const mutations = {
-  setStrategy(state, data) {
-    data.data.forEach(item => {
-      if (item.images.length >= 3) {
-        item.images.length = 3;
-      }
-    });
-    state.strategyList = data;
+    //设置总条数
+  setTotal(state, data) {
+    state.total = data;
   }
 };
 
