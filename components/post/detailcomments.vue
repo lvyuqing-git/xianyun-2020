@@ -49,7 +49,7 @@
     <div class="coments-list">
       <!-- 评论内容 -->
       <div class="comment-inner" v-if="total">
-          <CommentItem :data="commentsData" />
+        <CommentItem :data="commentsData" />
       </div>
       <!-- 分页组件 -->
       <el-pagination
@@ -63,15 +63,13 @@
         v-if="total"
       ></el-pagination>
       <!-- 没有评论时提示 -->
-      <div class="no-comment" v-if="!total">
-          暂无评论,赶快抢占沙发!
-      </div>
+      <div class="no-comment" v-if="!total">暂无评论,赶快抢占沙发!</div>
     </div>
   </div>
 </template>
 
 <script>
-import CommentItem from '@/components/post/detailCommentItem'
+import CommentItem from "@/components/post/detailCommentItem";
 export default {
   props: {
     data: {
@@ -217,6 +215,13 @@ export default {
   },
   components: {
     CommentItem
+  },
+  watch: {
+    "data.id"(val, oldVal) {
+      //   console.log(val, oldVal);
+      //   文章id变化,则要刷新评论数据
+      this.getCommentData();
+    }
   }
 };
 </script>
@@ -264,16 +269,16 @@ export default {
     margin-top: 20px;
     text-align: center;
     .comment-inner {
-        margin-bottom: 20px;
-        border: 1px solid #eee;
+      margin-bottom: 20px;
+      border: 1px solid #eee;
     }
   }
   .no-comment {
-      margin-bottom: 30px;
-      border: 1px dashed #ccc;
-      padding: 30px 0;
-      text-align: center;
-      color: #999;
+    margin-bottom: 30px;
+    border: 1px dashed #ccc;
+    padding: 30px 0;
+    text-align: center;
+    color: #999;
   }
 }
 </style>
