@@ -6,7 +6,8 @@
           <IndexAside></IndexAside>
         </div>
         <div class="right">
-          <IndexSearch @search='search' :sizeChange='sizeChange'></IndexSearch>
+          <IndexSearch @search='setSearchValue'
+                       :sizeChange='sizeChange'></IndexSearch>
           <IndexStrategy :searchValue='searchValue'></IndexStrategy>
         </div>
       </div>
@@ -31,7 +32,6 @@ import IndexStrategy from '@/components/post/indexStrategy'
 export default {
   data() {
     return {
-
       //接受搜索框的数据
       StrategyData: {},
       //页码默认值
@@ -41,7 +41,7 @@ export default {
       //分页框选择页数
       currentChange: 1,
       //搜索框的值
-      searchValue : ''
+      searchValue: ''
     }
   },
   components: {
@@ -50,10 +50,10 @@ export default {
     IndexStrategy
   },
   methods: {
-      //接受搜索输入框的值
-      search(value){
-          this.searchValue = value
-      },
+    //接受搜索输入框的值
+    setSearchValue(value) {
+      this.searchValue = value
+    },
     //重置页码
     resetCurrentChange() {
       this.currentChange = 1
@@ -76,7 +76,7 @@ export default {
           city: this.searchValue
         })
         .then(res => {
-          this.$store.commit('post/setStrategy', res.data)
+          //   this.$store.commit('post/setStrategy', res.data)
         })
     }
   }

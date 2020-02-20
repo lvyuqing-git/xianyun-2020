@@ -27,11 +27,7 @@
 
 <script>
 export default {
-  watch: {
-    searchValue() {
-      this.$emit('inputValue', this.searchValue)
-    }
-  },
+   
   data() {
     return {
       // 搜索值
@@ -45,9 +41,10 @@ export default {
       if (value) {
         this.searchValue = value
       }
-       this.$emit('search',this.searchValue)
+      this.$emit('search', this.searchValue)
+      
       //页码重置
-    //   this.$emit('resetCurrentChange')
+      //   this.$emit('resetCurrentChange')
     }
   }
 }

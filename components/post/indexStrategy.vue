@@ -78,28 +78,37 @@
 <script>
 export default {
   props: ['searchValue'],
+  watch: {
+    searchValue() {
+      this.init()
+    }
+  },
+  methods: {
+    init() {
+      this.$store
+        .dispatch('post/citySearch', {
+          _start: 0,
+          _limit: 3,
+          city: this.searchValue || ''
+        })
+        .then(res => {
+          this.strategyList = res.data
+          this.strategyList.data.forEach(item => {
+            if (item.images.length >= 3) {
+              item.images.length = 3
+            }
+          })
+          this.$store.commit('post/setTotal', this.strategyList.total)
+        })
+    }
+  },
   data() {
     return {
       strategyList: {}
     }
   },
   mounted() {
-    this.$store
-      .dispatch('post/citySearch', {
-        _start: 0,
-        _limit: 3,
-        city: this.searchValue || ''
-      })
-      .then(res => {
-        this.strategyList = res.data
-        console.log(this.strategyList)
-        this.strategyList.data.forEach(item => {
-          if (item.images.length >= 3) {
-            item.images.length = 3
-          }
-        })
-        this.$store.commit('post/setTotal', this.strategyList.total)
-      })
+    this.init()
     //页码重置
     this.$emit('resetCurrentChange')
   }
