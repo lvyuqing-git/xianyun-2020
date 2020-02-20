@@ -11,7 +11,7 @@
       <h1> {{ data.title }} </h1>
       <div class="detail-data">
         <span>攻略：{{ publishTime }}</span>
-        <span>阅读：{{data.watch}} </span>
+        <span>阅读：{{data.watch || 0}} </span>
       </div>
       <!-- 内容 -->
       <div class="detail-content" v-html="data.content"></div>

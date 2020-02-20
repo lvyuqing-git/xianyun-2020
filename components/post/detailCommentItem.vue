@@ -2,18 +2,31 @@
   <div class="comment-item">
     <!-- 评论块 -->
     <div class="comment-block" v-for="(item, index) in data" :key="index">
+      <!-- 递归组件 判断当前是否有上一层评论 -->
+      <!-- 递归组件 监听自定义事件 -->
+      <commentItem
+        :data="[...item.parent]"
+        v-if="item.parent && first !== 'one'"
+        class="inner-reply"
+        @replywho="replyParent"
+      />
+
       <el-row class="cItem-info" type="flex" justify="space-between">
         <!-- 头像 昵称 发布时间 -->
         <el-col class="cItem-head">
-          <img :src="$axios.defaults.baseURL+item.account.defaultAvatar" alt />
+          <img :src="$axios.defaults.baseURL+item.account.defaultAvatar" alt v-if="first === 'one'" />
           <span>{{ item.account.nickname }}</span>
           <span>{{ publicTime(item.created_at) }}</span>
         </el-col>
-        <el-col :span="3" class="cItem-total">1</el-col>
+        <el-col :span="3" class="cItem-total"> {{ item.level }} </el-col>
       </el-row>
-      <!-- 递归组件 判断当前是否有上一层评论 -->
-      <!-- 递归组件 监听自定义事件 -->
-      <commentItem :data="[...item.parent]" v-if="item.parent" class="inner-reply" @replywho="replyParent" />
+      <!-- 第一层评论 -->
+      <commentItem
+        :data="[...item.parent]"
+        v-if="item.parent && first === 'one'"
+        class="inner-reply"
+        @replywho="replyParent"
+      />
       <el-row class="cItem-content" type="flex" align="bottom">
         <!-- 评论内容 -->
         <el-col class="cItem-text">
@@ -42,6 +55,10 @@ export default {
     data: {
       type: Array,
       default: []
+    },
+    first: {
+      type: String,
+      default: ""
     }
   },
   methods: {
@@ -51,9 +68,9 @@ export default {
     },
     // 点击回复按钮
     replyParent(item) {
-        // console.log(item)
-        // 告诉父组件,被点击回复的 评论数据(id, 用户名)
-        this.$emit('replywho', item)
+      // console.log(item)
+      // 告诉父组件,被点击回复的 评论数据(id, 用户名)
+      this.$emit("replywho", item);
     }
   }
 };
@@ -63,12 +80,22 @@ export default {
 .comment-item {
   .comment-block {
     border-bottom: 1px dashed #ddd;
-    padding: 15px 15px 5px;
+    &:last-of-type {
+      border-bottom: none;
+    }
+    padding: 2px 15px;
+    .cItem-info {
+      padding: 10px 0 0 10px;
+    }
     .inner-reply {
       background-color: #f9f9f9;
       border: 1px solid #ddd;
+      a {
+        padding-right: 15px;
+      }
       .comment-block {
-          border: none;
+        border: none;
+        padding: 2px;
       }
     }
     .cItem-head {
@@ -90,6 +117,7 @@ export default {
       }
     }
     .cItem-total {
+      padding-right: 15px;
       text-align: right;
       font-size: 12px;
       color: #666;
