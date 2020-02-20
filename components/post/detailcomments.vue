@@ -22,11 +22,11 @@
     <transition name="el-zoom-in-center">
       <div v-show="showWho" class="transition-box reply-who">
         回复 @ {{ whoName }}
-        <span class="replay-no" @click="showWho = false">×</span>
+        <span class="replay-no" @click="noReply">×</span>
       </div>
     </transition>
     <!-- 评论输入区  -->
-    <div class="comments-input">
+    <div class="comments-input" id="comment-area">
       <!-- 输入框-文本域 -->
       <el-input type="textarea" :rows="2" placeholder="说点什么吧..." v-model="textarea" resize="none"></el-input>
       <!-- 照片墙+按钮 -->
@@ -184,12 +184,8 @@ export default {
           this.getCommentData();
           //   清空输入框内容
           this.textarea = "";
-          //   清空 回复id
-          this.parentId = "";
-          //   清空 回复用户名
-          this.whoName = "";
-          //   隐藏 回复谁的提示
-          this.showWho = false;
+          //   清空回复id\名字\隐藏提示
+          this.noReply();
         }
         // 其他处理，下边评论数据的再次获取？
       });
@@ -238,6 +234,21 @@ export default {
       this.whoName = val.account.nickname;
       this.showWho = true;
       this.parentId = val.id;
+      //   获取评论输入区的滚动距离
+      let textarea = document.getElementById("comment-area");
+      //   让页面滚动到 评论输入区的位置
+      document.documentElement.scrollTop = textarea.offsetTop;
+      // window.pageYOffset = 1000
+      // document.body.scrollTop = 1000
+    },
+    // @谁评论,点击×号时触发 / 清空回复id,回复名字,提示隐藏
+    noReply() {
+      //   清空 回复id
+      this.parentId = "";
+      //   清空 回复用户名
+      this.whoName = "";
+      //   隐藏 回复谁的提示
+      this.showWho = false;
     }
   },
   mounted() {
