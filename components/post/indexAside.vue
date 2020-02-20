@@ -17,7 +17,7 @@
                 <li v-for="(item2,index2) in item.children"
                     :key="index2"
                     class="sonli">
-                  <p class="childrens"><span class="index">{{index2+1}}</span> <span class="area">{{item2.city}}</span><i class="conten">{{item2.desc}}</i></p>
+                  <p class="childrens"><span class="index">{{index2+1}}</span> <span class="area hovering">{{item2.city}}</span><i class="conten hovering">{{item2.desc}}</i></p>
                 </li>
               </ul>
               <div class="line"></div>
@@ -117,6 +117,10 @@ export default {
         }
         .area {
           margin: 0 15px 0;
+        }
+        .hovering:hover{
+            cursor: pointer;
+            text-decoration: underline;
         }
       }
       .line {

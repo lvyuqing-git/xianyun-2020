@@ -6,7 +6,7 @@
           <IndexAside></IndexAside>
         </div>
         <div class="right">
-          <IndexSearch></IndexSearch>
+          <IndexSearch @resetCurrentChange='resetCurrentChange' @inputValue='inputValue'></IndexSearch>
           <IndexStrategy></IndexStrategy>
         </div>
       </div>
@@ -38,7 +38,9 @@ export default {
       //分页选择条数
       sizeChange: 3,
       //分页框选择页数
-      currentChange: 1
+      currentChange: 1,
+      //搜索输入框的值
+      searchValue : ''
     }
   },
   components: {
@@ -47,6 +49,15 @@ export default {
     IndexStrategy
   },
   methods: {
+      //接受搜索输入框的值
+      inputValue(value){
+          this.searchValue = value
+      },
+    //重置页码
+    resetCurrentChange() {
+      this.currentChange = 1
+      console.log(this.currentChange)
+    },
     //分页框选择条数时触发
     handleSizeChange(val) {
       this.sizeChange = val
@@ -55,12 +66,9 @@ export default {
     //分页框选择页数时触发
     handleCurrentChange(val) {
       this.currentChange = val
-      
-
       this.search()
     },
     search() {
-      console.log( (this.currentChange - 1) * this.sizeChange)
       this.$store
         .dispatch('post/citySearch', {
           _start: (this.currentChange - 1) * this.sizeChange,
@@ -68,7 +76,6 @@ export default {
           city: this.searchValue
         })
         .then(res => {
-          console.log(res.data)
           this.$store.commit('post/setStrategy', res.data)
         })
     }

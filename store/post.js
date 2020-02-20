@@ -1,17 +1,17 @@
 export const state = () => {
   return {
-    strategyList: {
-    }
+    //搜索数据
+    strategyList: {}
   };
 };
 
 export const mutations = {
   setStrategy(state, data) {
-      data.data.forEach((item)=>{
-        if(item.images.length >= 3){
-            item.images.length = 3
-        }
-      })
+    data.data.forEach(item => {
+      if (item.images.length >= 3) {
+        item.images.length = 3;
+      }
+    });
     state.strategyList = data;
   }
 };

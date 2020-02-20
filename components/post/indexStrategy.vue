@@ -109,6 +109,10 @@ export default {}
       font-size: 18px;
       color: #000;
       margin-bottom: 15px;
+      &:hover{
+          color: #ffa500;
+          cursor: pointer;
+      }
     }
     .content {
       width: 700px;
@@ -130,25 +134,35 @@ export default {}
     }
   }
   .zouyou {
-    width: 110%;
+    width: 100%;
     display: flex;
     justify-content: space-around;
     .left {
       width: 224px;
       img {
         width: 100%;
+        height: 150px;
+        object-fit: cover;
       }
     }
     .right {
       padding-left: 10px;
+      width: 450px;
       .title {
         font-size: 18px;
         color: #000;
         margin-bottom: 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+         &:hover{
+          color: #ffa500;
+          cursor: pointer;
+      }
       }
 
       .content {
-        width: 500px;
+        width: 450px;
         height: 81px;
         overflow: hidden;
         text-overflow: ellipsis;
