@@ -56,7 +56,7 @@
     <div class="coments-list">
       <!-- 评论内容 -->
       <div class="comment-inner" v-if="total">
-        <CommentItem :data="commentsData" />
+        <CommentItem :data="commentsData" @replywho="addParentComment" />
       </div>
       <!-- 分页组件 -->
       <el-pagination
@@ -93,7 +93,10 @@ export default {
       picList: [], // 照片列表
       currentPage: 1, //当前页码默认值
       total: 100, //总页数
-      pageSize: 2 //
+      pageSize: 2, //
+      showWho: false, //是否显示 回复哪个用户
+      whoName: "", // 被回复的用户名
+      parentId: "" // 被回复的用户id
     };
   },
   methods: {
@@ -121,6 +124,7 @@ export default {
       let content = this.textarea;
       let picsOrg = this.picList;
       let post = this.$route.query.id;
+      let follow = this.parentId; // 被回复的id
       let token = this.$store.state.user.userInfo.token;
       if (!content) {
         this.$message.error("评论的内容不能为空");
@@ -156,7 +160,8 @@ export default {
         {
           content,
           pics,
-          post
+          post,
+          follow
         },
         token
       );
@@ -178,7 +183,13 @@ export default {
           // 获取评论数据
           this.getCommentData();
           //   清空输入框内容
-          this.textarea = ""
+          this.textarea = "";
+          //   清空 回复id
+          this.parentId = "";
+          //   清空 回复用户名
+          this.whoName = "";
+          //   隐藏 回复谁的提示
+          this.showWho = false;
         }
         // 其他处理，下边评论数据的再次获取？
       });
@@ -218,6 +229,15 @@ export default {
           this.commentsData = data;
         }
       });
+    },
+    // 添加父级评论
+    addParentComment(val) {
+      //   console.log("监听到了");
+      console.log(val);
+      // 让回复@谁 显示
+      this.whoName = val.account.nickname;
+      this.showWho = true;
+      this.parentId = val.id;
     }
   },
   mounted() {

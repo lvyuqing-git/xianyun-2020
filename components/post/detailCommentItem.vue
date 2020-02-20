@@ -12,7 +12,8 @@
         <el-col :span="3" class="cItem-total">1</el-col>
       </el-row>
       <!-- 递归组件 判断当前是否有上一层评论 -->
-      <commentItem :data="[...item.parent]" v-if="item.parent" class="inner-reply" />
+      <!-- 递归组件 监听自定义事件 -->
+      <commentItem :data="[...item.parent]" v-if="item.parent" class="inner-reply" @replywho="replyParent" />
       <el-row class="cItem-content" type="flex" align="bottom">
         <!-- 评论内容 -->
         <el-col class="cItem-text">
@@ -26,7 +27,7 @@
           </el-row>
         </el-col>
         <el-col :span="3" class="cItem-reply">
-          <a href="javascript:;">回复</a>
+          <a href="javascript:;" @click="replyParent(item)">回复</a>
         </el-col>
       </el-row>
     </div>
@@ -47,6 +48,12 @@ export default {
     // 格式化时间
     publicTime(time) {
       return moment(new Date(time)).format("YYYY-MM-DD HH:mm");
+    },
+    // 点击回复按钮
+    replyParent(item) {
+        // console.log(item)
+        // 告诉父组件,被点击回复的 评论数据(id, 用户名)
+        this.$emit('replywho', item)
     }
   }
 };
