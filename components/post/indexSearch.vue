@@ -27,6 +27,11 @@
 
 <script>
 export default {
+  watch: {
+    searchValue() {
+      this.$emit('inputValue', this.searchValue)
+    }
+  },
   data() {
     return {
       // 搜索值
@@ -39,28 +44,23 @@ export default {
     search(event, value) {
       if (value) {
         this.searchValue = value
-      } 
+      }
+      this.$emit('resetCurrentChange')
       this.$store
         .dispatch('post/citySearch', {
           _start: 0,
           _limit: 3,
-          city: value || this.searchValue
+          city: this.searchValue
         })
         .then(res => {
-        //     //向父组件传递搜索结果
-        //   this.$emit('strategyData',res.data)
-        this.$store.commit('post/setStrategy',res.data)
+          this.$store.commit('post/setStrategy', res.data)
         })
     }
-  },
-  mounted () {
-      this.search()
   }
 }
 </script>
 
 <style lang='less' scoped>
-
 .searchbox {
   .searchbox-top {
     height: 40px;
@@ -92,7 +92,9 @@ export default {
         color: #666;
         &:hover {
           color: #ffa500;
+          cursor: pointer;
         }
+     
       }
       .first-cild:hover {
         color: #666;
