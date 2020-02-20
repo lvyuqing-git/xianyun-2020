@@ -39,7 +39,11 @@
            v-else>
         <div class="left">
           <div class="pictures">
-            <img :src="item.images[0]" alt="">
+            <img :src="item"
+                 alt=""
+                 v-for="(item,index) in item.images"
+                 :key="index">
+
           </div>
         </div>
         <div class="right">
