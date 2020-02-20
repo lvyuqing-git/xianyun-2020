@@ -56,7 +56,7 @@
     <div class="coments-list">
       <!-- 评论内容 -->
       <div class="comment-inner" v-if="total">
-        <CommentItem :data="commentsData" @replywho="addParentComment" />
+        <CommentItem :data="commentsData" @replywho="addParentComment" :first="'one'" />
       </div>
       <!-- 分页组件 -->
       <el-pagination
@@ -327,6 +327,7 @@ export default {
     margin-top: 20px;
     text-align: center;
     .comment-inner {
+      padding: 0 15px;
       margin-bottom: 20px;
       border: 1px solid #eee;
     }
