@@ -18,6 +18,13 @@
       </el-row>
     </div>
     <p class="comments-title">评论</p>
+    <!-- 回复谁(哪个用户)的提示  过渡效果: 缩放-->
+    <transition name="el-zoom-in-center">
+      <div v-show="showWho" class="transition-box reply-who">
+        回复 @ {{ whoName }}
+        <span class="replay-no" @click="showWho = false">×</span>
+      </div>
+    </transition>
     <!-- 评论输入区  -->
     <div class="comments-input">
       <!-- 输入框-文本域 -->
@@ -49,7 +56,7 @@
     <div class="coments-list">
       <!-- 评论内容 -->
       <div class="comment-inner" v-if="total">
-          <CommentItem :data="commentsData" />
+        <CommentItem :data="commentsData" @replywho="addParentComment" />
       </div>
       <!-- 分页组件 -->
       <el-pagination
@@ -63,15 +70,13 @@
         v-if="total"
       ></el-pagination>
       <!-- 没有评论时提示 -->
-      <div class="no-comment" v-if="!total">
-          暂无评论,赶快抢占沙发!
-      </div>
+      <div class="no-comment" v-if="!total">暂无评论,赶快抢占沙发!</div>
     </div>
   </div>
 </template>
 
 <script>
-import CommentItem from '@/components/post/detailCommentItem'
+import CommentItem from "@/components/post/detailCommentItem";
 export default {
   props: {
     data: {
@@ -88,7 +93,10 @@ export default {
       picList: [], // 照片列表
       currentPage: 1, //当前页码默认值
       total: 100, //总页数
-      pageSize: 2 //
+      pageSize: 2, //
+      showWho: false, //是否显示 回复哪个用户
+      whoName: "", // 被回复的用户名
+      parentId: "" // 被回复的用户id
     };
   },
   methods: {
@@ -116,6 +124,7 @@ export default {
       let content = this.textarea;
       let picsOrg = this.picList;
       let post = this.$route.query.id;
+      let follow = this.parentId; // 被回复的id
       let token = this.$store.state.user.userInfo.token;
       if (!content) {
         this.$message.error("评论的内容不能为空");
@@ -151,14 +160,15 @@ export default {
         {
           content,
           pics,
-          post
+          post,
+          follow
         },
         token
       );
     },
     // 提交评论 请求
     putComment(data, token) {
-      console.log(data, token);
+      //   console.log(data, token);
       this.$axios({
         method: "POST",
         url: "/comments",
@@ -167,9 +177,19 @@ export default {
           Authorization: "Bearer " + token
         }
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         if ((res.message = "提交成功")) {
           this.$message.success("评论提交成功！");
+          // 获取评论数据
+          this.getCommentData();
+          //   清空输入框内容
+          this.textarea = "";
+          //   清空 回复id
+          this.parentId = "";
+          //   清空 回复用户名
+          this.whoName = "";
+          //   隐藏 回复谁的提示
+          this.showWho = false;
         }
         // 其他处理，下边评论数据的再次获取？
       });
@@ -209,6 +229,15 @@ export default {
           this.commentsData = data;
         }
       });
+    },
+    // 添加父级评论
+    addParentComment(val) {
+      //   console.log("监听到了");
+      console.log(val);
+      // 让回复@谁 显示
+      this.whoName = val.account.nickname;
+      this.showWho = true;
+      this.parentId = val.id;
     }
   },
   mounted() {
@@ -217,6 +246,13 @@ export default {
   },
   components: {
     CommentItem
+  },
+  watch: {
+    "data.id"(val, oldVal) {
+      //   console.log(val, oldVal);
+      //   文章id变化,则要刷新评论数据
+      this.getCommentData();
+    }
   }
 };
 </script>
@@ -249,6 +285,33 @@ export default {
       margin-bottom: 10px;
     }
   }
+  .reply-who.transition-box {
+    display: inline-block;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: #999;
+    background-color: #eee;
+    .replay-no {
+      box-sizing: border-box;
+      display: inline-block;
+      margin-left: 10px;
+      border: 1px solid transparent;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+      line-height: 14px;
+      text-align: center;
+      &:hover {
+        border: 1px solid #ddd;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
   .comments-upload {
     /deep/.el-upload,
     /deep/.el-upload-list__item {
@@ -264,16 +327,16 @@ export default {
     margin-top: 20px;
     text-align: center;
     .comment-inner {
-        margin-bottom: 20px;
-        border: 1px solid #eee;
+      margin-bottom: 20px;
+      border: 1px solid #eee;
     }
   }
   .no-comment {
-      margin-bottom: 30px;
-      border: 1px dashed #ccc;
-      padding: 30px 0;
-      text-align: center;
-      color: #999;
+    margin-bottom: 30px;
+    border: 1px dashed #ccc;
+    padding: 30px 0;
+    text-align: center;
+    color: #999;
   }
 }
 </style>

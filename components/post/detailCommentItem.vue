@@ -11,6 +11,9 @@
         </el-col>
         <el-col :span="3" class="cItem-total">1</el-col>
       </el-row>
+      <!-- 递归组件 判断当前是否有上一层评论 -->
+      <!-- 递归组件 监听自定义事件 -->
+      <commentItem :data="[...item.parent]" v-if="item.parent" class="inner-reply" @replywho="replyParent" />
       <el-row class="cItem-content" type="flex" align="bottom">
         <!-- 评论内容 -->
         <el-col class="cItem-text">
@@ -24,7 +27,7 @@
           </el-row>
         </el-col>
         <el-col :span="3" class="cItem-reply">
-          <a href="javascript:;">回复</a>
+          <a href="javascript:;" @click="replyParent(item)">回复</a>
         </el-col>
       </el-row>
     </div>
@@ -34,6 +37,7 @@
 <script>
 import moment from "moment";
 export default {
+  name: "commentItem",
   props: {
     data: {
       type: Array,
@@ -41,8 +45,15 @@ export default {
     }
   },
   methods: {
+    // 格式化时间
     publicTime(time) {
       return moment(new Date(time)).format("YYYY-MM-DD HH:mm");
+    },
+    // 点击回复按钮
+    replyParent(item) {
+        // console.log(item)
+        // 告诉父组件,被点击回复的 评论数据(id, 用户名)
+        this.$emit('replywho', item)
     }
   }
 };
@@ -51,8 +62,15 @@ export default {
 <style lang="less" scoped>
 .comment-item {
   .comment-block {
-    border-bottom: 1px dashed #eee;
+    border-bottom: 1px dashed #ddd;
     padding: 15px 15px 5px;
+    .inner-reply {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      .comment-block {
+          border: none;
+      }
+    }
     .cItem-head {
       text-align: left;
       img {
