@@ -56,7 +56,12 @@
     <div class="coments-list">
       <!-- 评论内容 -->
       <div class="comment-inner" v-if="total">
-        <CommentItem :data="commentsData" @replywho="addParentComment" :first="'one'"  v-show="commentsData.length" />
+        <CommentItem
+          :data="commentsData"
+          @replywho="addParentComment"
+          :first="'one'"
+          v-show="commentsData.length"
+        />
       </div>
       <!-- 分页组件 -->
       <el-pagination
@@ -67,10 +72,10 @@
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
-        v-if="total"
+        v-if="total && commentsData.length"
       ></el-pagination>
       <!-- 没有评论时提示 -->
-      <div class="no-comment" v-if="!total">暂无评论,赶快抢占沙发!</div>
+      <div class="no-comment" v-if="!total || !commentsData.length">暂无评论,赶快抢占沙发!</div>
     </div>
   </div>
 </template>
@@ -180,6 +185,8 @@ export default {
         // console.log(res);
         if ((res.message = "提交成功")) {
           this.$message.success("评论提交成功！");
+          //   重置页码
+          this.currentPage = 1;
           // 获取评论数据
           this.getCommentData();
           //   清空输入框内容

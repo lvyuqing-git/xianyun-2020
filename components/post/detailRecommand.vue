@@ -5,16 +5,17 @@
     <!-- 攻略简要信息 -->
     <nuxt-link class="detail-brief" :to="'/post/detail?id='+ item.id" v-for="(item, index) in recommandList" :key="index">
       <el-row type="flex">
-        <el-col :span="16">
+        <el-col :span="14">
           <div class="title">{{item.title}}</div>
           <div class="info">
             <span> {{publishTime(item.created_at)}} </span>
             <span>阅读 {{ item.watch || 0 }}</span>
           </div>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="10">
           <!-- 图片资源缺少，此处占位 -->
           <div v-html="item.content" v-show="false"></div>
+          <img :src="item.images[0]" alt="" v-show="item.images.length" style="width: 100%;">
         </el-col>
       </el-row>
     </nuxt-link>
