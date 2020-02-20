@@ -12,7 +12,7 @@
         <li class="first-cild">推荐：</li>
         <li v-for="(item,index) in citylist"
             :key="index"
-            @click="search(item)">{{item}}</li>
+            @click="search($event,item)">{{item}}</li>
       </ul>
     </div>
     <div class="recommend">
@@ -36,10 +36,10 @@ export default {
   },
   //回车搜索
   methods: {
-    search(value) {
+    search(event, value) {
       if (value) {
         this.searchValue = value
-      }
+      } 
       this.$store
         .dispatch('post/citySearch', {
           _start: 0,
@@ -47,25 +47,20 @@ export default {
           city: value || this.searchValue
         })
         .then(res => {
-          console.log(res)
+        //     //向父组件传递搜索结果
+        //   this.$emit('strategyData',res.data)
+        this.$store.commit('post/setStrategy',res.data)
         })
     }
+  },
+  mounted () {
+      this.search()
   }
 }
 </script>
 
 <style lang='less' scoped>
-.clearfix:after {
-  content: ''; /*设置内容为空*/
-  height: 0; /*高度为0*/
-  line-height: 0; /*行高为0*/
-  display: block; /*将文本转为块级元素*/
-  visibility: hidden; /*将元素隐藏*/
-  clear: both; /*清除浮动*/
-}
-.clearfix {
-  zoom: 1; /*为了兼容IE*/
-}
+
 .searchbox {
   .searchbox-top {
     height: 40px;

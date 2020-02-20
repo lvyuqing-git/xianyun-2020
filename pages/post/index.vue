@@ -6,8 +6,8 @@
           <IndexAside></IndexAside>
         </div>
         <div class="right">
-          <IndexSearch @strategyData='setStrategyData'></IndexSearch>
-          <!-- <IndexStrategy></IndexStrategy> -->
+          <IndexSearch></IndexSearch>
+          <IndexStrategy></IndexStrategy>
         </div>
       </div>
     </div>
@@ -18,7 +18,7 @@
                    :page-sizes="[3, 5, 10, 15]"
                    :page-size="100"
                    layout="total, sizes, prev, pager, next, jumper"
-                   :total="StrategyData.total">
+                   :total="$store.state.post.strategyList.total">
     </el-pagination>
    </div>
   </div>
@@ -27,7 +27,7 @@
 <script>
 import IndexAside from '@/components/post/indexAside'
 import IndexSearch from '@/components/post/indexSearch'
-// import IndexStrategy from '@/components/post/indexStrategy'
+import IndexStrategy from '@/components/post/indexStrategy'
 export default {
     data () {
         return {
@@ -39,15 +39,10 @@ export default {
     },
   components: {
     IndexAside,
-    IndexSearch
-    // IndexStrategy
+    IndexSearch,
+    IndexStrategy
   },
   methods: {
-      //搜索框传递过来的搜索结果
-      setStrategyData(data){
-          this.StrategyData = data
-          console.log(data);
-      },
       //分页框选择条数时触发
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);

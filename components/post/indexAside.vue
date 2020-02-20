@@ -30,8 +30,8 @@
 
       <div class="asidebottom">
         <p>推荐城市</p>
-        <!-- <img src="pic_sea.jpeg"
-             alt=""> -->
+        <img src="pic_sea.jpeg"
+             alt="">
       </div>
     </div>
   </div>
@@ -109,7 +109,7 @@ export default {
         height: 40px;
         line-height: 40px;
         padding-left: 20px;
-        width: 400px;
+        width: 340px;
         .index {
           font-size: 20px;
           vertical-align: middle;
