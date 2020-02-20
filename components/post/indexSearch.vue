@@ -42,8 +42,8 @@ export default {
       }
       this.$emit('search', this.searchValue)
       
-      //页码重置
-      //   this.$emit('resetCurrentChange')
+    //   页码重置
+        this.$emit('resetCurrentChange')
     }
   }
 }

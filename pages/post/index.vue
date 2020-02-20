@@ -6,7 +6,7 @@
           <IndexAside></IndexAside>
         </div>
         <div class="right">
-          <IndexSearch @search='setSearchValue'></IndexSearch>
+          <IndexSearch @search='setSearchValue' @resetCurrentChange='resetCurrentChange'></IndexSearch>
           <IndexStrategy :searchValue='searchValue'
                          :pagingObj='paging'></IndexStrategy>
         </div>
@@ -61,6 +61,8 @@ export default {
     //重置页码
     resetCurrentChange() {
       this.paging.currentChange = 1
+      console.log(this.paging.currentChange);
+      
     },
     //分页框选择条数时触发
     handleSizeChange(val) {

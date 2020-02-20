@@ -82,19 +82,21 @@ export default {
     searchValue() {
       this.init()
     },
-     pagingObj: {
+    pagingObj: {
       deep: true,
       handler: function(val, oldVal) {
-        console.log(this.pagingObj)
         this.init()
       }
     }
   },
   methods: {
     init() {
+    document.body.scrollTop = 0
+    document.documentElement.scrollTop = 0
       this.$store
         .dispatch('post/citySearch', {
-          _start: (this.pagingObj.currentChange - 1) * this.pagingObj.sizeChange || 0,
+          _start:
+            (this.pagingObj.currentChange - 1) * this.pagingObj.sizeChange || 0,
           _limit: this.pagingObj.sizeChange || 3,
           city: this.searchValue || ''
         })
@@ -116,8 +118,7 @@ export default {
   },
   mounted() {
     this.init()
-    //页码重置
-    this.$emit('resetCurrentChange')
+  
   }
 }
 </script>
