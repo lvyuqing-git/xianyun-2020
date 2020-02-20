@@ -18,7 +18,7 @@
           <span>{{ item.account.nickname }}</span>
           <span>{{ publicTime(item.created_at) }}</span>
         </el-col>
-        <el-col :span="3" class="cItem-total">1</el-col>
+        <el-col :span="3" class="cItem-total"> {{ item.level }} </el-col>
       </el-row>
       <!-- 第一层评论 -->
       <commentItem

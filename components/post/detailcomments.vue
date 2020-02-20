@@ -5,11 +5,11 @@
       <el-row type="flex" justify="center">
         <el-col :span="3" class="cursor">
           <i class="iconfont iconpinglun"></i>
-          <span>评论(100)</span>
+          <span>评论( {{ total }} )</span>
         </el-col>
         <el-col
           :span="3"
-          @click.native=" $message.warning({message: '暂不支持分享', type: 'warning', offset: 30})"
+          @click.native=" $message.warning({message: '暂不支持分享', type: 'warning', offset: '30px'})"
           class="cursor"
         >
           <i class="iconfont iconfenxiang"></i>
@@ -56,7 +56,7 @@
     <div class="coments-list">
       <!-- 评论内容 -->
       <div class="comment-inner" v-if="total">
-        <CommentItem :data="commentsData" @replywho="addParentComment" :first="'one'" />
+        <CommentItem :data="commentsData" @replywho="addParentComment" :first="'one'"  v-show="commentsData.length" />
       </div>
       <!-- 分页组件 -->
       <el-pagination
@@ -184,6 +184,8 @@ export default {
           this.getCommentData();
           //   清空输入框内容
           this.textarea = "";
+          //   清除图片
+          this.picList = [];
           //   清空回复id\名字\隐藏提示
           this.noReply();
         }
@@ -338,7 +340,7 @@ export default {
     margin-top: 20px;
     text-align: center;
     .comment-inner {
-      padding: 0 15px;
+      //   padding: 0 15px;
       margin-bottom: 20px;
       border: 1px solid #eee;
     }
