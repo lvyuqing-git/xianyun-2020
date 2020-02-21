@@ -1,7 +1,7 @@
 <template>
   <div class="strategyList">
     <div class="strategy"
-         v-for="(item,index) in strategyList.data"
+         v-for="(item,index) in $store.state.post.strategyList.data"
          :key="index">
       <!-- 上下结构类型 -->
       <nuxt-link :to="`/post/detail/?id=${item.id}`"
@@ -77,49 +77,7 @@
 
 <script>
 export default {
-  props: ['searchValue', 'pagingObj'],
-  watch: {
-    searchValue() {
-      this.init()
-    },
-    pagingObj: {
-      deep: true,
-      handler: function(val, oldVal) {
-        this.init()
-      }
-    }
-  },
-  methods: {
-    init() {
-    document.body.scrollTop = 0
-    document.documentElement.scrollTop = 0
-      this.$store
-        .dispatch('post/citySearch', {
-          _start:
-            (this.pagingObj.currentChange - 1) * this.pagingObj.sizeChange || 0,
-          _limit: this.pagingObj.sizeChange || 3,
-          city: this.searchValue || ''
-        })
-        .then(res => {
-          this.strategyList = res.data
-          this.strategyList.data.forEach(item => {
-            if (item.images.length >= 3) {
-              item.images.length = 3
-            }
-          })
-          this.$store.commit('post/setTotal', this.strategyList.total)
-        })
-    }
-  },
-  data() {
-    return {
-      strategyList: {}
-    }
-  },
-  mounted() {
-    this.init()
-  
-  }
+  props: ['pagingObj']
 }
 </script>
 

@@ -6,20 +6,9 @@
           <IndexAside></IndexAside>
         </div>
         <div class="right">
-          <IndexSearch @search='setSearchValue'
-                       @resetCurrentChange='resetCurrentChange'></IndexSearch>
-          <IndexStrategy :searchValue='searchValue'
-                         :pagingObj='paging'></IndexStrategy>
-          <div class="paging">
-            <el-pagination @size-change="handleSizeChange"
-                           @current-change="handleCurrentChange"
-                           :current-page="paging.currentChange"
-                           :page-sizes="[3, 5, 10, 15]"
-                           :page-size="1"
-                           layout="total, sizes, prev, pager, next, jumper"
-                           :total="$store.state.post.total">
-            </el-pagination>
-          </div>
+          <IndexSearch @search='setSearchValue'></IndexSearch>
+          <IndexStrategy :pagingObj='strategyList'></IndexStrategy>
+          <IndexPagination :searchValue='searchValue'></IndexPagination>
         </div>
       </div>
     </div>
@@ -31,6 +20,7 @@
 import IndexAside from '@/components/post/indexAside'
 import IndexSearch from '@/components/post/indexSearch'
 import IndexStrategy from '@/components/post/indexStrategy'
+import IndexPagination from '@/components/post/indexPagination'
 export default {
   data() {
     return {
@@ -39,39 +29,25 @@ export default {
 
       //搜索框的值
       searchValue: '',
-      //分页对象
-      paging: {
-        //页码默认值
-        currentPage: 1,
-        //分页选择条数
-        sizeChange: 3,
-        //分页框选择页数
-        currentChange: 1
-      }
+      //搜索到的值
+      strategyList: {}
     }
   },
   components: {
     IndexAside,
     IndexSearch,
-    IndexStrategy
+    IndexStrategy,
+    IndexPagination
   },
   methods: {
     //接受搜索输入框的值
     setSearchValue(value) {
       this.searchValue = value
     },
-    //重置页码
-    resetCurrentChange() {
-      this.paging.currentChange = 1
-    },
-    //分页框选择条数时触发
-    handleSizeChange(val) {
-      this.paging.sizeChange = val
-    },
-    //分页框选择页数时触发
-    handleCurrentChange(val) {
-      this.paging.currentChange = val
-    }
+    // 重置页码
+    // resetCurrentChange() {
+    //   this.paging.currentChange = 1
+    // },
   }
 }
 </script>
@@ -93,7 +69,7 @@ export default {
   }
 }
 .paging {
-margin-top: 20px;
+  margin-top: 20px;
   text-align: center;
   padding-bottom: 15px;
 }

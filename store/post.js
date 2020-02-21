@@ -1,14 +1,14 @@
 export const state = () => {
   return {
-    //总条数
-    total: 0
+    //攻略数据列表
+    strategyList : {}
   };
 };
 
 export const mutations = {
     //设置总条数
-  setTotal(state, data) {
-    state.total = data;
+    strategyList(state, data) {
+    state.strategyList = data;
   }
 };
 
