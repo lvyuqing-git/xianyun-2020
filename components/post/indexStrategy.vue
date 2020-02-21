@@ -3,9 +3,36 @@
     <div class="strategy"
          v-for="(item,index) in $store.state.post.strategyList.data"
          :key="index">
+
+      <!-- 没有图片 -->
+      <nuxt-link :to="`/post/detail/?id=${item.id}`"
+                 v-if="item.images.length === 0">
+       <div class="up-down">
+          <div class="title">
+            {{item.title}}
+          </div>
+          <div class="content">
+            <div v-html="item.content">
+            </div>
+          </div>
+          <!-- 底部信息栏 -->
+          <div class="postinfo">
+            <ul>
+              <li><i class="el-icon-location-outline"></i>{{item.cityName}}</li>
+              <li>by</li>
+              <li class="cityname"><img :src="`${$axios.defaults.baseURL + item.account.defaultAvatar}`"
+                     alt=""
+                     class="defaultAvatar">{{item.account.nickname}}</li>
+              <li><i class="el-icon-view"></i> {{item.watch}}</li>
+              <li class="star">{{item.like}}赞</li>
+            </ul>
+          </div>
+        </div>
+      </nuxt-link>
+
       <!-- 上下结构类型 -->
       <nuxt-link :to="`/post/detail/?id=${item.id}`"
-                 v-if="item.images.length > 2">
+                 v-else-if="item.images.length > 2">
         <div class="up-down">
           <div class="title">
             {{item.title}}
@@ -39,7 +66,7 @@
 
       <!-- 左右结构 -->
       <nuxt-link :to="`/post/detail/?id=${item.id}`"
-                 v-else>
+                 v-else-if="item.images.length < 3">
         <div class="zouyou clearfix">
           <div class="left">
             <div class="pictures">
