@@ -6,22 +6,24 @@
           <IndexAside></IndexAside>
         </div>
         <div class="right">
-          <IndexSearch @search='setSearchValue' @resetCurrentChange='resetCurrentChange'></IndexSearch>
+          <IndexSearch @search='setSearchValue'
+                       @resetCurrentChange='resetCurrentChange'></IndexSearch>
           <IndexStrategy :searchValue='searchValue'
                          :pagingObj='paging'></IndexStrategy>
+          <div class="paging">
+            <el-pagination @size-change="handleSizeChange"
+                           @current-change="handleCurrentChange"
+                           :current-page="paging.currentChange"
+                           :page-sizes="[3, 5, 10, 15]"
+                           :page-size="1"
+                           layout="total, sizes, prev, pager, next, jumper"
+                           :total="$store.state.post.total">
+            </el-pagination>
+          </div>
         </div>
       </div>
     </div>
-    <div class="paging">
-      <el-pagination @size-change="handleSizeChange"
-                     @current-change="handleCurrentChange"
-                     :current-page="paging.currentChange"
-                     :page-sizes="[3, 5, 10, 15]"
-                     :page-size="1"
-                     layout="total, sizes, prev, pager, next, jumper"
-                     :total="$store.state.post.total">
-      </el-pagination>
-    </div>
+
   </div>
 </template>
 
@@ -61,8 +63,6 @@ export default {
     //重置页码
     resetCurrentChange() {
       this.paging.currentChange = 1
-      console.log(this.paging.currentChange);
-      
     },
     //分页框选择条数时触发
     handleSizeChange(val) {
@@ -72,17 +72,6 @@ export default {
     handleCurrentChange(val) {
       this.paging.currentChange = val
     }
-    // search() {
-    //   this.$store
-    //     .dispatch('post/citySearch', {
-    //       _start: (this.currentChange - 1) * this.sizeChange,
-    //       _limit: this.sizeChange,
-    //       city: this.searchValue
-    //     })
-    //     .then(res => {
-    //       //   this.$store.commit('post/setStrategy', res.data)
-    //     })
-    // }
   }
 }
 </script>
@@ -104,6 +93,7 @@ export default {
   }
 }
 .paging {
+margin-top: 20px;
   text-align: center;
   padding-bottom: 15px;
 }

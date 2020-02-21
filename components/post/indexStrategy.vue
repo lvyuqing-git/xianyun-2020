@@ -126,6 +126,7 @@ export default {
 <style lang='less' scoped>
 .postinfo {
   margin-top: 15px;
+  padding-bottom: 20px;
   li {
     float: left;
     font-size: 12px;

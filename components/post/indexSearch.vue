@@ -40,10 +40,11 @@ export default {
       if (value) {
         this.searchValue = value
       }
+      //传递输入框的值
       this.$emit('search', this.searchValue)
-      
-    //   页码重置
-        this.$emit('resetCurrentChange')
+
+      //   页码重置
+      this.$emit('resetCurrentChange')
     }
   }
 }

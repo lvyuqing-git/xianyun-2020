@@ -79,13 +79,15 @@ export default {
       border: 1px solid #dddddd;
       padding: 0 15px;
       margin-bottom: -1px;
+    
       .icon {
-        float: right;
+        margin-left: 152px;
         line-height: 40px;
         font-size: 20px;
         color: #a7a7a7;
       }
       &:hover {
+            
         border-right: none;
         color: #ffc14f;
         i {
