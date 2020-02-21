@@ -18,15 +18,12 @@ export default {
     searchValue() {
       this.paging.currentChange = 1
       this.init()
-
     }
   },
   data() {
     return {
       //分页对象
       paging: {
-        //页码默认值
-        currentPage: 1,
         //分页选择条数
         sizeChange: 3,
         //分页框选择页数
@@ -44,11 +41,25 @@ export default {
     //分页框选择条数时触发
     handleSizeChange(val) {
       this.paging.sizeChange = val
+      this.$route.replace({
+        url: this.$router.path,
+        query: {
+          start: this.paging.currentChange,
+          limit: this.paging.sizeChange
+        }
+      })
       this.init()
     },
     //分页框选择页数时触发
     handleCurrentChange(val) {
       this.paging.currentChange = val
+      this.$router.replace({
+        url: this.$route.path,
+        query: {
+          start: this.paging.currentChange,
+          limit: this.paging.sizeChange
+        }
+      })
       this.init()
     },
     init() {
@@ -62,9 +73,8 @@ export default {
         })
         .then(res => {
           this.strategyList = res.data
-          console.log(this.strategyList)
-        //   this.$emit('transmitStrategyList', this.strategyList)
-          this.$store.commit('post/strategyList',this.strategyList)
+          //   this.$emit('transmitStrategyList', this.strategyList)
+          this.$store.commit('post/strategyList', this.strategyList)
           this.strategyList.data.forEach(item => {
             if (item.images.length >= 3) {
               item.images.length = 3
@@ -74,7 +84,13 @@ export default {
     }
   },
   mounted() {
+    if(+this.$route.query.limit && +this.$route.query.start){
+        this.paging.sizeChange = +this.$route.query.limit
+    this.paging.currentChange = +this.$route.query.start
+    }
     this.init()
+
+    console.log(this.$route.query)
   }
 }
 </script>

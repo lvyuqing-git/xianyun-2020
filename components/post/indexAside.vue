@@ -57,7 +57,6 @@ export default {
       this.number = index
     },
     cityClick(value){
-        console.log(value);
         this.$router.replace({
             url : this.$route.path,
             query : {

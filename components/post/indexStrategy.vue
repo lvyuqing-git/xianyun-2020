@@ -5,9 +5,10 @@
          :key="index">
 
       <!-- 没有图片 -->
-      <nuxt-link :to="`/post/detail/?id=${item.id}`"
-                 v-if="item.images.length === 0">
-       <div class="up-down">
+      <nuxt-link v-if="item.images.length === 0"
+                 :to="`/post/detail/?id=${item.id}`">
+
+        <div class="up-down">
           <div class="title">
             {{item.title}}
           </div>
@@ -28,6 +29,7 @@
             </ul>
           </div>
         </div>
+
       </nuxt-link>
 
       <!-- 上下结构类型 -->
