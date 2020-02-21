@@ -16,8 +16,8 @@
               <ul>
                 <li v-for="(item2,index2) in item.children"
                     :key="index2"
-                    class="sonli">
-                  <p class="childrens"><span class="index">{{index2+1}}</span> <span class="area hovering">{{item2.city}}</span><i class="conten hovering">{{item2.desc}}</i></p>
+                    class="sonli" @click="cityClick(item2.city)">
+                  <p><span class="index">{{index2+1}}</span> <span class="area hovering">{{item2.city}}</span><i class="conten hovering">{{item2.desc}}</i></p>
                 </li>
               </ul>
               <div class="line"></div>
@@ -55,6 +55,15 @@ export default {
   methods: {
     alternumber(index) {
       this.number = index
+    },
+    cityClick(value){
+        console.log(value);
+        this.$router.replace({
+            url : this.$route.path,
+            query : {
+                city : value
+            }
+        })
     }
   }
 }
@@ -79,7 +88,7 @@ export default {
       border: 1px solid #dddddd;
       padding: 0 15px;
       margin-bottom: -1px;
-    
+
       .icon {
         margin-left: 152px;
         line-height: 40px;
@@ -88,9 +97,9 @@ export default {
       }
       &:hover {
         border-right: none;
-        color: #ffc14f;
+        color: orange;
         i {
-          color: #ffc14f;
+          color: orange;
         }
         .conten {
           color: #9a9a9a;
@@ -106,6 +115,7 @@ export default {
       border: 1px solid #dddddd;
       border-left: none;
       background-color: #fff;
+
       .sonli {
         height: 40px;
         line-height: 40px;
@@ -119,9 +129,9 @@ export default {
         .area {
           margin: 0 15px 0;
         }
-        .hovering:hover{
-            cursor: pointer;
-            text-decoration: underline;
+        .hovering:hover {
+          cursor: pointer;
+          text-decoration: underline;
         }
       }
       .line {
