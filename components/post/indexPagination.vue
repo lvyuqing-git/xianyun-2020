@@ -53,7 +53,7 @@ export default {
       this.$router.replace({
         url: this.$router.path,
         query: {
-          start: this.paging.currentChange,
+          start: (this.paging.currentChange-1) * this.paging.sizeChange,
           limit: this.paging.sizeChange
         }
       })
@@ -65,7 +65,7 @@ export default {
       this.$router.replace({
         url: this.$route.path,
         query: {
-          start: this.paging.currentChange,
+          start:(this.paging.currentChange-1) * this.paging.sizeChange,
           limit: this.paging.sizeChange
         }
       })
