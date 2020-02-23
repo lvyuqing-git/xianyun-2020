@@ -35,14 +35,12 @@ export default {
         // console.log(id);
         // 请求文章详情
         this.$axios({
-          url: "/posts",
-          params: {
-            id
-          }
-        }).then(({ data: { data } }) => {
-          console.log(data);
-          if (data.length) {
-            this.detailData = data[0];
+          url: `/posts/${id}`,
+
+        }).then(({data}) => {
+          // console.log(data);
+          if (data) {
+            this.detailData = data;
           }
         });
       }
