@@ -41,7 +41,7 @@ export default {
     //分页框选择条数时触发
     handleSizeChange(val) {
       this.paging.sizeChange = val
-      this.$route.replace({
+      this.$router.replace({
         url: this.$router.path,
         query: {
           start: this.paging.currentChange,
