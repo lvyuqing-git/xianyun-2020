@@ -5,12 +5,11 @@
       <!-- 递归组件 判断当前是否有上一层评论 -->
       <!-- 递归组件 监听自定义事件 -->
       <commentItem
-        :data="[...item.parent]"
+        :data="[item.parent]"
         v-if="item.parent && first !== 'one'"
         class="inner-reply"
         @replywho="replyParent"
       />
-
       <el-row class="cItem-info" type="flex" justify="space-between">
         <!-- 头像 昵称 发布时间 -->
         <el-col class="cItem-head">
@@ -22,7 +21,7 @@
       </el-row>
       <!-- 第一层评论 -->
       <commentItem
-        :data="[...item.parent]"
+        :data="[item.parent]"
         v-if="item.parent && first === 'one'"
         class="inner-reply"
         @replywho="replyParent"
@@ -71,7 +70,7 @@ export default {
       // console.log(item)
       // 告诉父组件,被点击回复的 评论数据(id, 用户名)
       this.$emit("replywho", item);
-    }
+    } 
   }
 };
 </script>
