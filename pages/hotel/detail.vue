@@ -11,7 +11,7 @@
     <div class="introduce">
       <h2 class="hotailName">{{detailInfo.name}}</h2>
       <p class="pinyin">{{detailInfo.alias}}</p>
-      <p class="pinyin "><i class="el-icon-location"></i>{{detailInfo.address}}</p>
+      <p class="pinyin el-icon-location">{{detailInfo.address}}</p>
     </div>
     <!-- 酒店图 -->
 
@@ -39,7 +39,7 @@ export default {
     this.$axios({
       url: `/hotels?id=185`
     }).then(res => {
-      console.log(res.data.data[0].products)
+      console.log(res.data.data[0])
       this.detailInfo = res.data.data[0]
     })
   },
