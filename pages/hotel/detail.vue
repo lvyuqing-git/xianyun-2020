@@ -19,12 +19,15 @@
 
     <!-- 酒店信息表 -->
     <HotelTable :tableData='detailInfo.products'></HotelTable>
+    <!-- 酒店资料表 -->
+    <HotelDateTable :detailData='detailInfo'></HotelDateTable>
   </div>
 </template>
 
 <script>
 import Hotelimg from '@/components/hotel/hotelImg'
 import HotelTable from '@/components/hotel/hotelTable'
+import HotelDateTable from '@/components/hotel/hotelDateTable'
 export default {
   data() {
     return {
@@ -45,7 +48,8 @@ export default {
   },
   components: {
     Hotelimg,
-    HotelTable
+    HotelTable,
+    HotelDateTable
   }
 }
 </script>
@@ -55,7 +59,7 @@ export default {
   width: 1000px;
   margin: 0 auto;
   margin-top: 20px;
-  height: 800px;
+  height: 1800px;
   .introduce {
     margin-top: 20px;
     .hotailName {
