@@ -19,7 +19,7 @@
       <div class="recommend-top">
         <span>推荐攻略</span>
         <el-button type="primary"
-                   icon="el-icon-edit">写游记</el-button>
+                   icon="el-icon-edit" @click="$router.push({path : '/post/create'})">写游记</el-button>
       </div>
     </div>
   </div>
