@@ -14,18 +14,23 @@
       <p class="pinyin "><i class="el-icon-location"></i>{{detailInfo.address}}</p>
     </div>
     <!-- 酒店图 -->
-    <div>
-      <Hotelimg></Hotelimg>
-    </div>
+
+    <Hotelimg></Hotelimg>
+
+    <!-- 酒店信息表 -->
+    <HotelTable :tableData='detailInfo.products'></HotelTable>
   </div>
 </template>
 
 <script>
 import Hotelimg from '@/components/hotel/hotelImg'
+import HotelTable from '@/components/hotel/hotelTable'
 export default {
   data() {
     return {
-      detailInfo: {}
+      detailInfo: {
+        products: []
+      }
     }
   },
   mounted() {
@@ -34,12 +39,13 @@ export default {
     this.$axios({
       url: `/hotels?id=185`
     }).then(res => {
-      console.log(res.data.data)
+      console.log(res.data.data[0].products)
       this.detailInfo = res.data.data[0]
     })
   },
   components: {
-    Hotelimg
+    Hotelimg,
+    HotelTable
   }
 }
 </script>
@@ -59,13 +65,13 @@ export default {
       color: #666;
       font-size: 14px;
       line-height: 16px;
-      i{
-          font-size: 18px;
+      i {
+        font-size: 18px;
       }
     }
   }
-  .img{
-      margin-top: 40px;
+  .img {
+    margin-top: 40px;
   }
 }
 </style>
