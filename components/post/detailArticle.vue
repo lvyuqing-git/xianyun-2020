@@ -2,7 +2,8 @@
   <div class="detail-article">
     <!-- 面包屑导航 -->
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/post', query: { start: 0, limit: 3 } }">旅游攻略</el-breadcrumb-item>
+      <!-- 添加动态start和limit，可以回到 原先查看攻略主页的状态 -->
+      <el-breadcrumb-item :to="{ path: '/post', query: { start: this.$store.state.post.urlObj.start || 0, limit: this.$store.state.post.urlObj.limit || 3 } }">旅游攻略</el-breadcrumb-item>
       <el-breadcrumb-item>攻略详情</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 文章内容 -->
