@@ -2,7 +2,12 @@ export const state = () => {
   return {
     //攻略数据列表
     strategyList: {},
-  
+    //回到上一个页面
+    urlObj : 
+        {
+          limit : 3,
+          start : 0
+        }
   };
 };
 
@@ -10,6 +15,9 @@ export const mutations = {
   //设置总条数
   strategyList(state, data) {
     state.strategyList = data;
+  },
+  addUrlObj(state, data){
+    state.urlObj = data
   }
 };
 

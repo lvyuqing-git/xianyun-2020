@@ -4,9 +4,10 @@
                    @current-change="handleCurrentChange"
                    :current-page="paging.currentChange"
                    :page-sizes="[3, 5, 10, 15]"
-                   :page-size="1"
+                   :page-size="paging.sizeChange"
                    layout="total, sizes, prev, pager, next, jumper"
-                   :total="strategyList.total">
+                   :total="strategyList.total"
+                   v-if="strategyList.total">
     </el-pagination>
   </div>
 </template>
@@ -18,7 +19,15 @@ export default {
     searchValue() {
       this.paging.currentChange = 1
       this.init()
-    }
+    },
+   $route(){
+       if(this.$route.query){
+           this.$store.commit('post/addUrlObj',{
+               start : this.$route.query.start,
+               limit : this.$route.query.limit,
+           })
+       }
+   }
   },
   data() {
     return {
@@ -89,8 +98,6 @@ export default {
     this.paging.currentChange = +this.$route.query.start
     }
     this.init()
-
-    console.log(this.$route.query)
   }
 }
 </script>
