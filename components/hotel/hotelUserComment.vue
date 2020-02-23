@@ -1,7 +1,8 @@
 <template>
   <div class="usercomment">
-    <div class="title">真是用户评论</div>
-    <div class="comment">
+    <h4 class="titel">真是用户评论</h4>
+
+    <div class="bottom">
       <div class="left">
         <ul>
           <li>总评论数：{{tableData.all_remarks}}</li>
@@ -16,17 +17,30 @@
                  text-color="#ff9900"
                  score-template="{value}">
         </el-rate>
+        <div class="recommend">推荐</div>
       </div>
-      <div class="riht">
+      <div class="right">
+        <div class="box c1">
+          <p>环境</p>
+          <p>{{tableData.scores.environment}}</p>
+        </div>
+        <div class="box c2">
+          <p>产品</p>
+          <p>{{tableData.scores.product}}</p>
+        </div>
+        <div class="box c3">
+          <p>服务</p>
+          <p>{{tableData.scores.service}}</p>
+        </div>
         <canvas ref="environment"
-                width="300"
-                height="300"></canvas>
+                width="100"
+                height="70"></canvas>
         <canvas ref="product"
-                width="300"
-                height="300"></canvas>
+                width="100"
+                height="70"></canvas>
         <canvas ref="service"
-                width="300"
-                height="300"></canvas>
+                width="70"
+                height="70"></canvas>
 
       </div>
     </div>
@@ -36,24 +50,26 @@
 <script>
 export default {
   props: ['tableData'],
+  data() {
+    return {
+      commentList: ['environment', 'product', 'service']
+    }
+  },
   methods: {
     init(c, value) {
-        console.log(c);
-        console.log(value);
-        
       // 获取画笔
       var ctx = c.getContext('2d')
       // 给画笔添加颜色
-      ctx.strokeStyle = 'red'
+      ctx.strokeStyle = '#ff9c09'
       // 设置画笔宽度
-      ctx.lineWidth = 3
+      ctx.lineWidth = 2
       // 开始绘制“当前”的路径
       ctx.beginPath()
       // 绘制圆形 (重点在怎样把角度换算成弧度)
       ctx.arc(
-        150,
-        150,
-        100,
+        35,
+        35,
+        30,
         (-90 * Math.PI) / 180,
         (Math.PI / 180) * (360 * (value / 10)) - (90 * Math.PI) / 180
       )
@@ -70,5 +86,61 @@ export default {
 }
 </script>
 
-<style>
+<style lang='less' scoped>
+.titel {
+  margin-bottom: 15px;
+}
+.bottom {
+  display: flex;
+  .left {
+    color: #666;
+    font-size: 16px;
+    li {
+      line-height: 22px;
+    }
+  }
+  .center {
+    padding: 26px 70px;
+    position: relative;
+    .recommend {
+      transform: rotate(-25deg);
+      position: absolute;
+      top: -10;
+      left: 90;
+      width: 90px;
+      height: 90px;
+      line-height: 90px;
+      border: 2px solid #ffe6c0;
+      text-align: center;
+      font-size: 30px;
+      border-radius: 50%;
+      color: #ffe6c0;
+    }
+  }
+  .right {
+    position: relative;
+    .box {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      font-size: 16px;
+      border-radius: 50%;
+      color: #ff9c09;
+      top: 15px;
+    }
+    .c1{
+      left: 5px;  
+    }
+    .c2{
+      left: 110px;  
+    }
+    .c3{
+      left: 215px;  
+  }
+  }
+}
+/deep/.el-rate__icon {
+  font-size: 22px;
+}
 </style>
