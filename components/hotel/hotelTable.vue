@@ -25,10 +25,7 @@
 
 <script>
 export default {
-  props: ['tableData'],
-  mounted() {
-    console.log(this.tableData)
-  }
+  props: ['tableData']
 }
 </script>
 
