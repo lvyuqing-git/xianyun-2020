@@ -147,9 +147,12 @@ export default {
               // }
             });
             // 存储当前城市
-            this.cityName = cityinfo;
-            this.$store.commit("hotel/setHotelCity", cityinfo);
-            console.log(this.cityName);
+            // this.cityName = cityinfo;
+            // this.$store.commit("hotel/setHotelCity", cityinfo);
+            // 固定城市
+            this.cityName = '广州';
+            this.$store.commit("hotel/setHotelCity", '广州');
+            // console.log(this.cityName);
             // 获取当前酒店的位置
             this.getScenics();
             //地图显示当前城市
