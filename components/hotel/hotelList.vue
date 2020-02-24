@@ -7,7 +7,7 @@
         <div>
           <el-row type="flex">
             <el-col>价格</el-col>
-            <el-col style="text-align: right">0-4000</el-col>
+            <el-col style="text-align: right">0-{{ Math.floor(40*priceBar) }}</el-col>
           </el-row>
         </div>
         <div style="width: 90%">
@@ -20,13 +20,22 @@
         <div>
           <el-dropdown trigger="click">
             <span class="el-dropdown-link">
-              {{ '已选'+ 4 +'项' || '不限' }}
-              <i class="el-icon-arrow-down el-icon--right"></i>
+              {{ '已选'+ optionsObj.levels.length +'项' || '不限' }}
+              <i
+                class="el-icon-arrow-down el-icon--right"
+              ></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <!-- <el-dropdown-item icon="el-icon-circle-check">  <i class="iconfont iconright-1"></i> <i class="iconfont iconcircle"></i> 蚵仔煎</el-dropdown-item> -->
-              <el-dropdown-item v-for="(item, index) in optionsFilter.levels" :key="index">
-                <i class="iconfont iconcircle"></i>
+              <!-- <el-dropdown-item icon="el-icon-circle-check">  <i class="iconfont "></i> <i class="iconfont iconcircle"></i> 蚵仔煎</el-dropdown-item> -->
+              <el-dropdown-item
+                v-for="(item, index) in optionsFilter.levels"
+                :key="index"
+                @click.native="optionsSelect('levels', index)"
+              >
+                <i
+                  class="iconfont"
+                  :class="{'iconcircle': !item.select, 'iconright-1': item.select}"
+                ></i>
                 {{ item.name }}
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -39,13 +48,22 @@
         <div>
           <el-dropdown trigger="click">
             <span class="el-dropdown-link">
-              下拉菜单
-              <i class="el-icon-arrow-down el-icon--right"></i>
+              {{ '已选'+ optionsObj.types.length +'项' || '不限' }}
+              <i
+                class="el-icon-arrow-down el-icon--right"
+              ></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <!-- <el-dropdown-item icon="el-icon-circle-check">  <i class="iconfont iconright-1"></i> <i class="iconfont iconcircle"></i> 蚵仔煎</el-dropdown-item> -->
-              <el-dropdown-item v-for="(item, index) in optionsFilter.types" :key="index">
-                <i class="iconfont iconcircle"></i>
+              <el-dropdown-item
+                v-for="(item, index) in optionsFilter.types"
+                :key="index"
+                @click.native="optionsSelect('types', index)"
+              >
+                <i
+                  class="iconfont"
+                  :class="{'iconcircle': !item.select, 'iconright-1': item.select}"
+                ></i>
                 {{item.name}}
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -58,13 +76,22 @@
         <div>
           <el-dropdown trigger="click">
             <span class="el-dropdown-link">
-              下拉菜单
-              <i class="el-icon-arrow-down el-icon--right"></i>
+              {{ '已选'+ optionsObj.assets.length +'项' || '不限' }}
+              <i
+                class="el-icon-arrow-down el-icon--right"
+              ></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <!-- <el-dropdown-item icon="el-icon-circle-check">  <i class="iconfont iconright-1"></i> <i class="iconfont iconcircle"></i> 蚵仔煎</el-dropdown-item> -->
-              <el-dropdown-item v-for="(item, index) in optionsFilter.assets" :key="index">
-                <i class="iconfont iconcircle"></i>
+              <el-dropdown-item
+                v-for="(item, index) in optionsFilter.assets"
+                :key="index"
+                @click.native="optionsSelect('assets', index)"
+              >
+                <i
+                  class="iconfont"
+                  :class="{'iconcircle': !item.select, 'iconright-1': item.select}"
+                ></i>
                 {{item.name}}
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -77,13 +104,22 @@
         <div>
           <el-dropdown trigger="click">
             <span class="el-dropdown-link">
-              下拉菜单
-              <i class="el-icon-arrow-down el-icon--right"></i>
+              {{ '已选'+ optionsObj.brands.length +'项' || '不限' }}
+              <i
+                class="el-icon-arrow-down el-icon--right"
+              ></i>
             </span>
             <el-dropdown-menu slot="dropdown" style="float:right;max-height: 230px;overflow: auto;">
               <!-- <el-dropdown-item icon="el-icon-circle-check">  <i class="iconfont iconright-1"></i> <i class="iconfont iconcircle"></i> 蚵仔煎</el-dropdown-item> -->
-              <el-dropdown-item v-for="(item, index) in optionsFilter.brands" :key="index">
-                <i class="iconfont iconcircle"></i>
+              <el-dropdown-item
+                v-for="(item, index) in optionsFilter.brands"
+                :key="index"
+                @click.native="optionsSelect('brands', index)"
+              >
+                <i
+                  class="iconfont"
+                  :class="{'iconcircle': !item.select, 'iconright-1': item.select}"
+                ></i>
                 {{item.name}}
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -93,6 +129,7 @@
     </el-row>
     <!-- 酒店详情列表 -->
     <div class="hotel-box">
+        <!-- 有数据时 -->
       <el-row type="flex" class="box-line" v-for="(item, index) in hotelList" :key="index">
         <el-col :span="7">
           <img :src="item.photos" alt />
@@ -101,6 +138,7 @@
           <h4>
             <nuxt-link to>{{ item.name }}</nuxt-link>
           </h4>
+          <!-- 右侧酒店品牌 -->
           <el-row type="flex">
             <el-col :span="16">
               <div class="hotel-en-name">
@@ -143,11 +181,11 @@
               <div class="hetelInfoAside">
                 <ul>
                   <li v-for="(i, k) in item.products" :key="k">
-                      <span>{{ i.name }}</span>
-                      <span class="left">
-                        ￥{{ i.price }}起
-                        <i class="el-icon-arrow-right"></i>
-                      </span>
+                    <span>{{ i.name }}</span>
+                    <span class="left">
+                      ￥{{ i.price }}起
+                      <i class="el-icon-arrow-right"></i>
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -155,6 +193,10 @@
           </el-row>
         </el-col>
       </el-row>
+        <!-- 没有数据时 -->
+        <div style="text-align: center; padding: 50px" v-show="hotelList.length === 0">
+            暂无符合条件的酒店
+        </div>
     </div>
     <!-- 分页 -->
     <div class="pageNum">
@@ -184,7 +226,22 @@ export default {
       },
       hotelList: [],
       value: 3.7,
-      currentPage: 1
+      currentPage: 1,
+      hotelOptions: {
+        price_lt: "", //价格上限
+        city: "", //城市id
+        hotellevel_in: "", //酒店星级id
+        hoteltype_in: "", // 酒店类型id  经济型
+        hotelasset_in: "", //酒店设施id
+        hotelbrand_in: "" //酒店品牌id
+      },
+      //   已选择的条件有
+      optionsObj: {
+        levels: [],
+        types: [],
+        assets: [],
+        brands: []
+      }
     };
   },
   mounted() {
@@ -192,7 +249,11 @@ export default {
     this.getFilterOptions();
     setTimeout(() => {
       // 获取酒店列表
-      this.getHotelList();
+     //   获取城市信息
+      this.getCityInfo();
+      this.getHotelList({
+          city: this.cityId
+      });
     }, 100);
   },
   methods: {
@@ -203,18 +264,28 @@ export default {
       }).then(({ data: { data } }) => {
         console.log(data);
         if (data) {
+          //   数据改造
+          let arr = Object.keys(data);
+          console.log(arr);
+          arr.forEach(i => {
+            data[i].map(item => {
+              // 初始化没勾选
+              item.select = false;
+            });
+            // 初始化勾选 为空数组
+          });
           this.optionsFilter = data;
         }
       });
     },
     // 获取酒店详情
-    getHotelList() {
-      this.getCityInfo();
+    getHotelList(params) {
       this.$axios({
         url: "/hotels",
-        params: {
-          city: this.cityId
-        }
+        // params: {
+        //   city: this.cityId
+        // }
+        params
       }).then(({ data: { data } }) => {
         console.log(data);
         if (data.length) {
@@ -229,6 +300,8 @@ export default {
             item.scoresAverage = Number(item.scoresAverage.toFixed(1));
           });
           this.hotelList = data;
+        }else {
+            this.hotelList = []
         }
       });
     },
@@ -241,6 +314,52 @@ export default {
     handlerPage(val) {
       this.currentPage = val;
       console.log(val);
+    },
+    optionsSelect(opName, index) {
+      //   console.log(opName);
+      //   console.log(index);
+      this.optionsFilter[opName][index].select = !this.optionsFilter[opName][
+        index
+      ].select;
+      // 每次清空数组
+      this.optionsObj[opName] = [];
+      this.optionsFilter[opName].forEach(val => {
+        // console.log(val);
+        if (val.select) {
+          this.optionsObj[opName].push(val.id);
+        }
+      });
+
+        //   获取参数
+        this.getParams()
+    },
+    // 获取参数
+    getParams() {
+        let paramsObj = {}
+        this.hotelOptions.city = this.cityId
+        // price_lt: "", //价格上限
+        // city: "", //城市id
+        // hotellevel_in: "", //酒店星级id
+        // hoteltype_in: "", // 酒店类型id  经济型
+        // hotelasset_in: "", //酒店设施id
+        // hotelbrand_in: "" //酒店品牌id
+        this.hotelOptions.price_lt = Math.floor(40*this.priceBar)
+        this.hotelOptions.hotellevel_in = this.optionsObj.levels[this.optionsObj.levels.length - 1]
+        this.hotelOptions.hoteltype_in = this.optionsObj.types[this.optionsObj.types.length - 1]
+        this.hotelOptions.hotelasset_in = this.optionsObj.assets[this.optionsObj.assets.length - 1]
+        this.hotelOptions.hotelbrand_in = this.optionsObj.brands[this.optionsObj.brands.length - 1]
+
+        Object.keys(this.hotelOptions).forEach(val => {
+            if(this.hotelOptions[val]) {
+                paramsObj[val] = this.hotelOptions[val]
+            }
+        })
+        console.log(paramsObj)
+        // 重新获取酒店数据
+        this.getHotelList(paramsObj)
+        
+        
+
     }
   }
 };
@@ -310,10 +429,10 @@ export default {
       font-size: 14px;
       color: #666;
     }
-    .pageNum {
-      padding: 20px 40px;
-      text-align: right;
-    }
+  }
+  .pageNum {
+    padding: 20px 40px;
+    text-align: right;
   }
 
   .hetelInfoAside {
