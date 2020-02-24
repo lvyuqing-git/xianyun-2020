@@ -7,7 +7,9 @@ export const state = () => {
         {
           limit : 3,
           start : 0
-        }
+        },
+    //保存草稿
+    articleInfo : []
   };
 };
 
@@ -18,7 +20,10 @@ export const mutations = {
   },
   addUrlObj(state, data){
     state.urlObj = data
-  }
+  },
+  setArticleInfo(state, data){
+    state.articleInfo.push(data)
+  },
 };
 
 export const actions = {
