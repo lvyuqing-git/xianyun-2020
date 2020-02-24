@@ -1,8 +1,8 @@
 <template>
-  <div class="usercomment">
+  <div class="usercomment ">
     <h4 class="titel">真是用户评论</h4>
 
-    <div class="bottom">
+    <div class="bottom clearfix">
       <div class="left">
         <ul>
           <li>总评论数：{{tableData.all_remarks}}</li>
@@ -102,10 +102,10 @@ export default {
   .center {
     padding: 26px 70px;
     position: relative;
-    .recommend {
-      transform: rotate(-25deg);
+    div.recommend {
+    //   transform: rotate(-25deg);
       position: absolute;
-      top: -10;
+      top: -9;
       left: 90;
       width: 90px;
       height: 90px;
